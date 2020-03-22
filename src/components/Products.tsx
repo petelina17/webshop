@@ -11,20 +11,19 @@ interface Props {
 
 interface State {
     productList: Array<ProductData>
-    categoryId: string
+    categoryId: number
 }
 
 export default class Products extends Component<Props> {
   constructor (props: Props) {
     super(props)
-    this.loadProducts()
   }
 
-    selectedId = ''
+    selectedId: number = 0
 
     state: State = {
       productList: [],
-      categoryId: ''
+      categoryId: 0
     }
 
     //
@@ -33,7 +32,11 @@ export default class Products extends Component<Props> {
     // hook call when props are changed
     // https://www.pluralsight.com/guides/prop-changes-in-react-component
     //
-    componentDidUpdate (prevProps: Props, prevState: State): void {
+    componentDidMount(): void {
+      this.loadProducts()
+    }
+
+  componentDidUpdate (prevProps: Props, prevState: State): void {
       // compare category in props with local variable 'selectedId' and save if changed, and load procucts
       if (this.selectedId !== this.props.category.id) {
         this.selectedId = this.props.category.id
@@ -57,7 +60,7 @@ export default class Products extends Component<Props> {
       //   })
 
       const allProducts = require('../assets/product-data/product-data.json')
-      this.setState({ productList: allProducts })
+      this.setState({ productList: allProducts.filter((p: ProductData) => p.category === this.selectedId) })
     }
 
     render () {

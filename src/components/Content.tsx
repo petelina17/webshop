@@ -15,7 +15,7 @@ export default class Content extends Component<Props> {
     // temporary solution
     state = {
       activePage: 1,
-      activeCategory: { name: '', id: '' },
+      activeCategory: { name: '', id: 0 },
       categoryListCopy: new Array<CategoryData>()
     }
 

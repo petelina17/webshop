@@ -6,7 +6,7 @@ import CategoryWidget from './CategoryWidget'
 
 export interface CategoryData {
   name: string
-  id: string
+  id: number
 }
 
 // colors from https://colorhunt.co/
@@ -40,9 +40,8 @@ export default class Categories extends Component<Props> {
 
   componentDidMount() {
     const allCategories = require('../assets/product-data/categories.json')
-    console.log(allCategories)
     this.setState({categoryList: allCategories})
-    //this.props.onCategoriesLoaded(this.state.categoryList)
+    this.props.onCategoriesLoaded(allCategories)
   }
 
   state = {
