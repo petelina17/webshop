@@ -13,9 +13,9 @@ export default class Footer extends Component {
 
 const footer: CSSProperties = {
   height: '8rem',
-  backgroundColor: '#3789c5',
-  border: '4px solid white',
-  borderRadius: '12px',
+  backgroundColor: '#d0d0d0',
+  // border: '4px solid white',
+  // borderRadius: '12px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'

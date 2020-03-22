@@ -64,5 +64,5 @@ const layout: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   minHeight: '100vh',
-  backgroundColor: '#e7f1fc'
+  // backgroundColor: '#e7f1fc'
 }

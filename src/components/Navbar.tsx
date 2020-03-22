@@ -18,12 +18,12 @@ export default class Navbar extends Component <{handleCart: () => void}> {
 
 const navbar: CSSProperties = {
   height: '4rem',
-  backgroundColor: '#3789c5',
+  backgroundColor: '#c0c0c0',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  border: '4px solid white',
-  borderRadius: '12px'
+  // border: '4px solid white',
+  // borderRadius: '12px'
 }
 
 const cartIcon: CSSProperties = {

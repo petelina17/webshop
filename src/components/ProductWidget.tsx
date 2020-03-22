@@ -4,9 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons'
 
 export interface ProductData {
+    category: number
+    id: number
     image: string
     name: string
     salePrice: number
+    description: string
+    measure: string
 }
 
 interface Props {

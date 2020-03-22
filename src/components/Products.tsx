@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Component, CSSProperties } from 'react'
 import ProductWidget, { ProductData } from './ProductWidget'
-import axios from 'axios'
+// import axios from 'axios'
 import { CategoryData } from './Categories'
 
 interface Props {
@@ -43,18 +43,21 @@ export default class Products extends Component<Props> {
     }
 
     loadProducts = () => {
-      const productsApiUrl = 'https://api.bestbuy.com/v1/products(categoryPath.id=' +
-            this.props.category.id + ')?format=json&show=sku,name,salePrice,image&sort=salePrice&apiKey='
+      // const productsApiUrl = 'https://api.bestbuy.com/v1/products(categoryPath.id=' +
+      //       this.props.category.id + ')?format=json&show=sku,name,salePrice,image&sort=salePrice&apiKey='
+      //
+      // axios.get(productsApiUrl)
+      //   .then((response) => {
+      //     if (response != null && response.data != null) {
+      //       console.log('response.data:', response.data)
+      //       // const listOfTVSubcategories = response.data.categories[0].subCategories
+      //       // const names = listOfTVSubcategories.map((item: any) => item.name)
+      //       this.setState({ productList: response.data.products })
+      //     }
+      //   })
 
-      axios.get(productsApiUrl)
-        .then((response) => {
-          if (response != null && response.data != null) {
-            console.log('response.data:', response.data)
-            // const listOfTVSubcategories = response.data.categories[0].subCategories
-            // const names = listOfTVSubcategories.map((item: any) => item.name)
-            this.setState({ productList: response.data.products })
-          }
-        })
+      const allProducts = require('../assets/product-data/product-data.json')
+      this.setState({ productList: allProducts })
     }
 
     render () {

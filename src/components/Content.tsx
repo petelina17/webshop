@@ -82,8 +82,8 @@ const content: CSSProperties = {
 
 const header: CSSProperties = {
   textAlign: 'center',
-  backgroundColor: '#43a1db',
-  border: '4px solid white',
+  // backgroundColor: '#43a1db',
+  // border: '4px solid white',
   borderRadius: '12px'
 }
 
@@ -102,10 +102,10 @@ const logo: CSSProperties = {
   fontSize: '4rem',
   marginTop: '0.5em',
   marginBottom: '0.2em',
-  fontFamily: 'Constantia',
-  fontStyle: 'italic',
-  fontWeight: 'bold',
-  textShadow: '2px 2px gray'
+  // fontFamily: 'Constantia',
+  // fontStyle: 'italic',
+  // fontWeight: 'bold',
+  // textShadow: '2px 2px gray'
 }
 
 const subtitle: CSSProperties = {
@@ -123,7 +123,7 @@ const btnBack: CSSProperties = {
   margin: 'auto',
   marginBottom: '1em',
   marginTop: '1em',
-  backgroundColor: 'lightgrey',
+  // backgroundColor: 'lightgrey',
   fontSize: '1.5rem',
   borderRadius: '1em',
   display: 'flex',
