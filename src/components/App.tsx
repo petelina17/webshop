@@ -1,12 +1,14 @@
 import React from 'react'
 import Layout from './Layout'
+import Login from './Login'
 
 export default class App extends React.Component {
-  render () {
+  render() {
     return (
-      <React.Fragment>
-        <Layout/>
-      </React.Fragment>
+        <div>
+
+          <Layout/>
+        </div>
     )
   }
 }
