@@ -49,7 +49,7 @@ class Navbar extends Component <{handleCart: () => void}> {
           <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()} />
         </div>
         <Login open={this.state.showLogin} onClose={this.closeLogin} />
-        <div style={login}>{appStore.currentUser === '' ? '' : 'Välkommen ' + appStore.currentUser }</div>
+        <div style={welcome}>{appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase() }</div>
       </div>
     )
   }
@@ -79,6 +79,11 @@ const cartIcon: CSSProperties = {
 const login: CSSProperties = {
   paddingRight: '3em',
   cursor: 'pointer'
+}
+
+const welcome: CSSProperties = {
+  paddingLeft: '3em',
+  cursor: 'pointer',
 }
 
 // React Easy State is a practical state management library with two functions and two accompanying rules.
