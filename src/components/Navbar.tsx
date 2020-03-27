@@ -4,6 +4,7 @@ import { Component, CSSProperties } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import Login from './Login'
+import {appStore} from '../store'
 
 export default class Navbar extends Component <{handleCart: () => void}> {
 

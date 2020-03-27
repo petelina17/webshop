@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid'
 import Alert from './Alert'
 import {setCookie} from 'tiny-cookie'
 import {UserData} from './userData'
+import {appStore} from '../store'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -117,6 +118,7 @@ export default function Login(props: Props) {
       password: state.password
     }
     localStorage.setItem('userdata_' + state.username, JSON.stringify(userData))
+    appStore.currentUser = state.username
 
     props.onClose()
     setState({...state, snackbarText: 'Allt gick bra, tack!', snackbarOpen: true, registrationMode: false})
