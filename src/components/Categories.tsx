@@ -76,7 +76,6 @@ const categories: CSSProperties = {
   flexDirection: 'row',
   justifyContent: 'center',
   margin: '2rem 0',
-  fontFamily: 'Calibri',
   fontWeight: 'bold'
   // backgroundColor: '#f0f0f0'
 }
