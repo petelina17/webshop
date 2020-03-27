@@ -106,8 +106,12 @@ export default function Login(props: Props) {
   const saveRegistration = () => {
     const now = new Date;
     now.setMonth(now.getMonth() + 1);
-    // @ts-ignore
-    setCookie('currentUser', state.username, { expires: now.toGMTString() });
+
+    if (state.checked) {
+      // @ts-ignore
+      setCookie('currentUser', state.username, { expires: now.toGMTString() })
+    }
+
 
     // save all user data to local store
     const userData: UserData = {
