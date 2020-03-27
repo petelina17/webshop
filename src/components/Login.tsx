@@ -87,31 +87,50 @@ export default function Login(props: Props) {
 
   const checkLogin = () => {
     // Get user password from local storage
-    const userData = [
-      {username: 'pete@gmail.com', password: '5555'},
-      {username: 'bob@gmail.com', password: 'odenkirk'}
-    ]
 
-    const found = userData.find(user => user.username === state.username && user.password === state.password)
-    if (found != null) {
+    // Search for stored user data in JSON format in local storage
+    const foundJSON = localStorage.getItem('userdata_' + state.username)
+    // If found go futher
+    if (foundJSON != null) {
       console.log('user found')
-      props.onClose()
-    } else {
-      console.log('user not found')
-      setState({...state, loginError: true})
+
+      // convert user data from JSON format to object of UserData type
+      const found: UserData = JSON.parse(foundJSON)
+
+      // check if stored password and input pasword are the same
+      if (found.password === state.password) {
+
+        // user is OK - save username to global store and set cookies if checked
+
+        // save username to global store
+        appStore.currentUser = state.username
+
+        // save all user data to local store
+        if (state.checked) {
+          const now = new Date;
+          now.setMonth(now.getMonth() + 1);
+          // @ts-ignore
+          setCookie('currentUser', state.username, { expires: now.toGMTString() })
+        }
+
+        props.onClose()
+        return;
+      }
     }
+
+    // nothing found in local storage or wrong password
+    setState({...state, loginError: true})
   }
 
   // Here is the place cookie was set first time when user was registered
   const saveRegistration = () => {
-    const now = new Date;
-    now.setMonth(now.getMonth() + 1);
-
+    // set cookies if checked
     if (state.checked) {
+      const now = new Date;
+      now.setMonth(now.getMonth() + 1);
       // @ts-ignore
       setCookie('currentUser', state.username, { expires: now.toGMTString() })
     }
-
 
     // save all user data to local store
     const userData: UserData = {
@@ -122,6 +141,8 @@ export default function Login(props: Props) {
       password: state.password
     }
     localStorage.setItem('userdata_' + state.username, JSON.stringify(userData))
+
+    // save username to global store
     appStore.currentUser = state.username
 
     props.onClose()
@@ -237,15 +258,18 @@ export default function Login(props: Props) {
                             Bli medlem
                           </Button>
 
-                          <Button variant="outlined" color="default" size="large" className={classes.button}
-                                  onClick={() => {
-                                    props.onClose()
-                                  }}
-                          >
-                            Close
-                          </Button>
+
                         </>
                     }
+
+                    <Button variant="outlined" color="default" size="large" className={classes.button}
+                            onClick={() => {
+                              props.onClose()
+                              setState({...state, registrationMode: false})
+                            }}
+                    >
+                      Close
+                    </Button>
 
                   </Grid>
                 </form>
