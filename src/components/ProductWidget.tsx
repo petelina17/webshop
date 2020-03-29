@@ -22,7 +22,7 @@ export default class ProductWidget extends Component<Props> {
     onCartIconClick = () => {
       // this.props.onCartIconClick(this.props.productData)
       addProductData(this.props.productData)
-      console.log(appStore.cartList)
+      // console.log(appStore.cartList)
     }
 
     render () {

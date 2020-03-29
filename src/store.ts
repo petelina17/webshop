@@ -30,3 +30,7 @@ export function addProductData(productData: ProductData) {
   }
   found.quantity += 1
 }
+
+export function removeCartListItem(id: number) {
+  appStore.cartList = appStore.cartList.filter(cartListItem => cartListItem.productData.id !== id)
+}
