@@ -5,6 +5,7 @@ import Content from './Content'
 import Footer from './Footer'
 import { ProductData } from './ProductWidget'
 import Cart from './Cart'
+import {view} from 'react-easy-state'
 
 export interface cartItem {
     id: string,
