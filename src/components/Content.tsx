@@ -8,7 +8,7 @@ import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { ProductData } from './ProductWidget'
 
 interface Props {
-    onCartIconClick: (product: ProductData) => void
+
 }
 
 export default class Content extends Component<Props> {
@@ -52,7 +52,7 @@ export default class Content extends Component<Props> {
           </div>
           <div style={productsView}>
             <Sidebar categoryList={this.state.categoryListCopy} categorySelected={this.onCategorySelected} />
-            <Products category={this.state.activeCategory} onCartIconClick={this.props.onCartIconClick} />
+            <Products category={this.state.activeCategory} />
           </div>
         </>
       }

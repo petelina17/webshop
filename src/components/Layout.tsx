@@ -27,7 +27,7 @@ export default class Layout extends Component <{}, State> {
         <div style={layout}>
           <Navbar handleCart={this.displayCart}/>
           {!this.state.hideCart ? <Cart /> : null}
-          <Content onCartIconClick={this.addToTheCart}/>
+          <Content />
           <Footer/>
         </div>
       )

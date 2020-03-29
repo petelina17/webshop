@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Component, CSSProperties } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import {addProductData, appStore} from '../store'
 
 export interface ProductData {
     category: number
@@ -15,12 +16,13 @@ export interface ProductData {
 
 interface Props {
     productData: ProductData
-    onCartIconClick: (product: ProductData) => void
 }
 
 export default class ProductWidget extends Component<Props> {
     onCartIconClick = () => {
-      this.props.onCartIconClick(this.props.productData)
+      // this.props.onCartIconClick(this.props.productData)
+      addProductData(this.props.productData)
+      console.log(appStore.cartList)
     }
 
     render () {

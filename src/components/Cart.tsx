@@ -1,5 +1,11 @@
 import * as React from 'react'
 import { Component, CSSProperties } from 'react'
+import {ProductData} from './ProductWidget'
+
+export interface CartItem {
+  productData: ProductData
+  quantity: number
+}
 
 export default class Cart extends Component {
   render () {

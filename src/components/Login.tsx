@@ -181,16 +181,23 @@ export default function Login(props: Props) {
                         <>
                           <TextField required
                                      variant="outlined"
-                                     label="DITT NAMN"
+                                     label="NAMN"
                                      type="text"
                                      name="firstname"
                                      onChange={handleTextChange}
                           />
                           <TextField required
                                      variant="outlined"
-                                     label="DITT EFTERNAMN"
+                                     label="EFTERNAMN"
                                      type="text"
                                      name="secondname"
+                                     onChange={handleTextChange}
+                          />
+                          <TextField required
+                                     variant="outlined"
+                                     label="MOBILNUMMER"
+                                     type="text"
+                                     name="Mobilnummer"
                                      onChange={handleTextChange}
                           />
                           <TextField required

@@ -6,7 +6,6 @@ import { CategoryData } from './Categories'
 
 interface Props {
     category: CategoryData
-    onCartIconClick: (product: ProductData) => void
 }
 
 interface State {
@@ -69,7 +68,7 @@ export default class Products extends Component<Props> {
 
       if (this.state.productList.length > 0) {
         availableProducts = this.state.productList.map((product: ProductData, i) =>
-          <ProductWidget key={i} productData={product} onCartIconClick={this.props.onCartIconClick} />)
+          <ProductWidget key={i} productData={product} />)
       }
 
       return (
