@@ -34,3 +34,21 @@ export function addProductData(productData: ProductData) {
 export function removeCartListItem(id: number) {
   appStore.cartList = appStore.cartList.filter(cartListItem => cartListItem.productData.id !== id)
 }
+
+export function increaseCartListItem (id: number) {
+  const found = appStore.cartList.find(cartListItem => cartListItem.productData.id === id)
+  if (found) {
+    found.quantity += 1
+  }
+}
+
+export function reduceCartListItem (id: number) {
+  const found = appStore.cartList.find(cartListItem => cartListItem.productData.id === id)
+  if (found) {
+    found.quantity -= 1
+    if (found.quantity === 0) {
+      removeCartListItem(id)
+    }
+  }
+
+}

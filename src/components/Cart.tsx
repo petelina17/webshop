@@ -1,9 +1,11 @@
 import * as React from 'react'
 import {Component, CSSProperties, MouseEvent} from 'react'
 import {ProductData} from './ProductWidget'
-import {appStore, removeCartListItem} from '../store'
+import {appStore, increaseCartListItem, reduceCartListItem, removeCartListItem} from '../store'
 import {view} from 'react-easy-state'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 
 export interface CartItem {
   productData: ProductData
@@ -20,6 +22,14 @@ class Cart extends Component {
     removeCartListItem(id)
   }
 
+  reduceCartItem = (id: number) => (event: MouseEvent) => {
+    reduceCartListItem(id)
+  }
+
+  increaseCartItem = (id: number) => (event: MouseEvent) => {
+    increaseCartListItem(id)
+  }
+
   render() {
     let total = 0
     let x
@@ -33,15 +43,18 @@ class Cart extends Component {
           <h1>My cart</h1>
           {
             appStore.cartList.map((cartListItem, i) =>
-                <h1 key={i}>
-                  <span>{cartListItem.productData.name}&nbsp;</span>
-                  <span>{cartListItem.quantity}&nbsp;</span>
-                  <span>{cartListItem.productData.salePrice.toFixed(2)}&nbsp;</span>
-                  <span>{roundPrice(cartListItem.quantity * cartListItem.productData.salePrice).toFixed(2)}&nbsp;</span>
-                  <DeleteForeverIcon onClick={this.deleteCartItem(cartListItem.productData.id)} />
-                </h1>
+                <h2 key={i}>
+                  <span style={textName}>{cartListItem.productData.name}&nbsp;</span>
+                  <AddIcon style={icon} onClick={this.increaseCartItem(cartListItem.productData.id)} />
+                  <span style={textNum}>{cartListItem.quantity}&nbsp;</span>
+                  <RemoveIcon style={icon} onClick={this.reduceCartItem(cartListItem.productData.id)} />
+                  <span style={textNum}>{cartListItem.productData.salePrice.toFixed(2)}&nbsp;</span>
+                  <span style={textNum}>{roundPrice(cartListItem.quantity * cartListItem.productData.salePrice).toFixed(2)}&nbsp;</span>
+                  <DeleteForeverIcon style={icon} fontSize="large" onClick={this.deleteCartItem(cartListItem.productData.id)} />
+                </h2>
             )
           }
+          <h2>TOTAL: {total.toFixed(2)}</h2>
           <h3>Inkl. moms: {moms.toFixed(2)}</h3>
         </div>
     )
@@ -52,5 +65,22 @@ const cart: CSSProperties = {
   height: '10rem',
   backgroundColor: '#dddddd'
 }
+
+const textName: CSSProperties = {
+  paddingLeft: '1em',
+  paddingRight: '1em',
+  width: '500px'
+}
+
+const textNum: CSSProperties = {
+  paddingLeft: '1em',
+  paddingRight: '1em',
+  width: '100px'
+}
+
+const icon: CSSProperties = {
+  cursor: 'pointer'
+}
+
 
 export default view(Cart)
