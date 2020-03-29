@@ -6,6 +6,7 @@ import {ProductData} from './components/ProductWidget'
 interface StateStore {
     currentUser: string
     cartList: CartItem[]
+
 }
 
 const stateObject: StateStore = {

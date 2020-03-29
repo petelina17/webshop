@@ -41,7 +41,7 @@ export default class ProductWidget extends Component<Props> {
             <div style={icons}>
               <FontAwesomeIcon icon={faHeart}/>
               <FontAwesomeIcon style={cart} icon={faCartPlus} onClick={this.onCartIconClick}/>
-              <div style={price}>{this.props.productData.salePrice}</div>
+              <div style={price}>{this.props.productData.salePrice.toFixed(2)}</div>
             </div>
           </div>
         </div>
