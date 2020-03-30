@@ -93,7 +93,7 @@ const cart: CSSProperties = {
   position: 'absolute',
   top: '4rem',
   right: '3rem',
-  backgroundColor: '#c0c0c0',
+  backgroundColor: '#e3e3e3',
   borderRadius: '0.5em',
   margin: '1rem',
   boxShadow: '5px 8px 8px 8px rgba(100, 100, 100, 0.15)'
