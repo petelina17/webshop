@@ -146,23 +146,14 @@ export default function Login(props: Props) {
     appStore.currentUser = state.username
 
     props.onClose()
-    setState({...state, snackbarText: 'Allt gick bra, tack!', snackbarOpen: true, registrationMode: false})
+    setState({...state, registrationMode: false})
+    appStore.snackbarText = 'Allt gick bra, tack!'
+    appStore.snackbarOpen = true
   }
 
 
   return (
       <>
-        <Snackbar open={state.snackbarOpen} autoHideDuration={6000}
-                  anchorOrigin={{horizontal:'center', vertical:'top'}} onClose={handleClose}>
-          <Alert onClose={() => {
-            setState({...state, snackbarOpen: false})
-          }}
-                 severity="success"
-          >
-            {state.snackbarText}
-          </Alert>
-        </Snackbar>
-
         <Dialog onClose={handleClose}
                 aria-labelledby="form-dialog-title"
                 open={props.open}>
