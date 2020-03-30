@@ -13,6 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {TablePagination} from '@material-ui/core'
 
 export interface CartItem {
   productData: ProductData
@@ -26,7 +27,9 @@ function roundPrice(price: number) {
 class Cart extends Component {
   state = {
     snackbarOpen: false,
-    snackbarText: ''
+    snackbarText: '',
+    page: 0,
+    rowsPerPage: 4,
   }
 
   deleteCartItem = (id: number) => (event: MouseEvent) => {
@@ -51,60 +54,74 @@ class Cart extends Component {
 
     return (
         <div style={cart}>
+          <Paper>
+            <TableContainer style={table}>
+              <Table stickyHeader aria-label="spanning table">
 
-          <TableContainer component={Paper}>
-            <Table aria-label="spanning table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Produkt namn</TableCell>
+                    <TableCell align="right">Antal</TableCell>
+                    <TableCell align="right">Pris</TableCell>
+                    <TableCell align="right">Summa</TableCell>
+                    <TableCell align="center">Ta bort</TableCell>
+                  </TableRow>
+                </TableHead>
 
-              <TableHead>
-                <TableRow>
-                  <TableCell>Produkt namn</TableCell>
-                  <TableCell align="right">Antal</TableCell>
-                  <TableCell align="right">Pris</TableCell>
-                  <TableCell align="right">Summa</TableCell>
-                  <TableCell align="center">Ta bort</TableCell>
-                </TableRow>
-              </TableHead>
+                <TableBody>
+                  {
+                    appStore.cartList
+                        .slice(this.state.page * this.state.rowsPerPage,
+                            this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+                        .map((cli, i) =>
+                        <TableRow key={cli.productData.id}>
+                          <TableCell>{cli.productData.name}</TableCell>
 
-              <TableBody>
-                {
-                  appStore.cartList.map((cli, i) =>
-                      <TableRow key={cli.productData.id}>
-                        <TableCell>{cli.productData.name}</TableCell>
+                          <TableCell align="right">
+                            <AddIcon style={icon} onClick={this.increaseCartItem(cli.productData.id)}/>
+                            {cli.quantity}
+                            <RemoveIcon style={icon} onClick={this.reduceCartItem(cli.productData.id)}/>
+                          </TableCell>
 
-                        <TableCell align="right">
-                          <AddIcon style={icon} onClick={this.increaseCartItem(cli.productData.id)}/>
-                          {cli.quantity}
-                          <RemoveIcon style={icon} onClick={this.reduceCartItem(cli.productData.id)}/>
-                        </TableCell>
+                          <TableCell align="right">{cli.productData.salePrice} </TableCell>
 
-                        <TableCell align="right">{cli.productData.salePrice} </TableCell>
+                          <TableCell align="right">
+                            {roundPrice(cli.quantity * cli.productData.salePrice).toFixed(2)}
+                          </TableCell>
 
-                        <TableCell align="right">
-                          {roundPrice(cli.quantity * cli.productData.salePrice).toFixed(2)}
-                        </TableCell>
+                          <TableCell align="center">
+                            <DeleteForeverIcon style={icon}
+                                               onClick={this.deleteCartItem(cli.productData.id)}/>
+                          </TableCell>
+                        </TableRow>
+                    )}
 
-                        <TableCell align="center">
-                          <DeleteForeverIcon style={icon}
-                                             onClick={this.deleteCartItem(cli.productData.id)}/>
-                        </TableCell>
-                      </TableRow>
-                  )}
+                  <TableRow>
+                    <TableCell rowSpan={3}/>
+                    <TableCell colSpan={2}>Total</TableCell>
+                    <TableCell align='right'>{total.toFixed(2)}</TableCell>
+                  </TableRow>
 
-                <TableRow>
-                  <TableCell rowSpan={3} />
-                  <TableCell colSpan={2}>Total</TableCell>
-                  <TableCell align='right'>{total.toFixed(2)}</TableCell>
-                </TableRow>
+                  <TableRow>
+                    <TableCell>Inkl. moms</TableCell>
+                    <TableCell align="right">{`25 %`}</TableCell>
+                    <TableCell align="right">{moms.toFixed(2)}</TableCell>
+                  </TableRow>
 
-                <TableRow>
-                  <TableCell>Inkl. moms</TableCell>
-                  <TableCell align="right">{`25 %`}</TableCell>
-                  <TableCell align="right">{moms.toFixed(2)}</TableCell>
-                </TableRow>
-
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[4]}
+                component="div"
+                count={appStore.cartList.length}
+                rowsPerPage={this.state.rowsPerPage}
+                page={this.state.page}
+                onChangePage={(event: unknown, newPage: number) => {
+                  this.setState({page: newPage})
+                }}
+            />
+          </Paper>
         </div>
     )
   }
@@ -112,7 +129,6 @@ class Cart extends Component {
 
 
 const cart: CSSProperties = {
-  height: '40rem',
   backgroundColor: '#dddddd'
 }
 
@@ -132,5 +148,8 @@ const icon: CSSProperties = {
   cursor: 'pointer'
 }
 
+const table: CSSProperties = {
+  maxHeight: '440px'
+}
 
 export default view(Cart)

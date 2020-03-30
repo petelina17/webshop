@@ -6,6 +6,7 @@ import Footer from './Footer'
 import { ProductData } from './ProductWidget'
 import Cart from './Cart'
 import {view} from 'react-easy-state'
+import {Button, Typography} from '@material-ui/core'
 
 export interface cartItem {
     id: string,
@@ -27,7 +28,20 @@ export default class Layout extends Component <{}, State> {
       return (
         <div style={layout}>
           <Navbar handleCart={this.displayCart}/>
-          {!this.state.hideCart ? <Cart /> : null}
+          {this.state.hideCart ? null :
+              <div style={cart}>
+                <Typography variant="h4" component="h3">
+                  Kundvagn
+                </Typography>
+
+                <Cart />
+
+                <Button variant="contained" color="primary" size="large" onClick={() => {}}>
+                  TILL KASSAN
+                </Button>
+              </div>
+
+          }
           <Content />
           <Footer/>
         </div>
@@ -66,4 +80,18 @@ const layout: CSSProperties = {
   flexDirection: 'column',
   minHeight: '100vh',
   // backgroundColor: '#e7f1fc'
+}
+
+const cart: CSSProperties = {
+  width: '100%',
+  maxWidth: '900px',
+  maxHeight: '600px',
+  padding: '1rem',
+  position: 'absolute',
+  top: '4rem',
+  right: '3rem',
+  backgroundColor: '#c0c0c0',
+  borderRadius: '0.5em',
+  margin: '1rem'
+
 }

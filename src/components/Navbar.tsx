@@ -7,8 +7,13 @@ import Login from './Login'
 import {appStore} from '../store'
 import {view} from 'react-easy-state'
 import {getCookie} from 'tiny-cookie'
+import {Button} from '@material-ui/core'
 
-class Navbar extends Component <{handleCart: () => void}> {
+interface Props {
+  handleCart: () => void
+}
+
+class Navbar extends Component <Props> {
 
   state = {
     showLogin: false
@@ -36,6 +41,16 @@ class Navbar extends Component <{handleCart: () => void}> {
   render () {
     return (
       <div style={navbar}>
+        <div style={welcome}>
+          {appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase() }
+        </div>
+
+        <div style={cartIcon}>
+          <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()} />
+        </div>
+
+        <Button variant="contained" color="secondary" size="medium">TILL KASSAN</Button>
+
         {appStore.currentUser === '' ?
             <div style={login} onClick={this.openLogin}>
               LOGGA IN / SKAPA KONTO
@@ -45,11 +60,8 @@ class Navbar extends Component <{handleCart: () => void}> {
               LOGGA UT
             </div>
         }
-        <div style={cartIcon}>
-          <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()} />
-        </div>
+
         <Login open={this.state.showLogin} onClose={this.closeLogin} />
-        <div style={welcome}>{appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase() }</div>
       </div>
     )
   }
@@ -73,12 +85,16 @@ const cartIcon: CSSProperties = {
   borderRadius: '50%',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  marginLeft: '2rem',
+  marginRight: '2rem',
+  cursor: 'pointer'
 }
 
 const login: CSSProperties = {
   paddingRight: '3em',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  marginLeft: '2rem'
 }
 
 const welcome: CSSProperties = {
