@@ -10,8 +10,13 @@ class App extends React.Component {
   render() {
     return (
         <div>
-          <Snackbar open={appStore.snackbarOpen} autoHideDuration={6000}
-                    anchorOrigin={{horizontal: 'center', vertical: 'top'}} >
+          <Snackbar open={appStore.snackbarOpen}
+                    autoHideDuration={3000}
+                    anchorOrigin={{horizontal: 'center', vertical: 'top'}}
+                    onClose={() => {
+                      appStore.snackbarOpen = false
+                    }}
+          >
             <Alert onClose={() => {
               appStore.snackbarOpen = false
             }}
