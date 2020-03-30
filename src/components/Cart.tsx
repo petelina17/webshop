@@ -6,8 +6,13 @@ import {view} from 'react-easy-state'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
-import Alert from './Alert'
-import {Snackbar} from '@material-ui/core'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 export interface CartItem {
   productData: ProductData
@@ -47,32 +52,67 @@ class Cart extends Component {
     return (
         <div style={cart}>
 
-          <h1>Min kundvagn</h1>
+          <TableContainer component={Paper}>
+            <Table aria-label="spanning table">
 
-          {
-            appStore.cartList.map((cartListItem, i) =>
-                <h2 key={i}>
-                  <span style={textName}>{cartListItem.productData.name}&nbsp;</span>
-                  <AddIcon style={icon} onClick={this.increaseCartItem(cartListItem.productData.id)}/>
-                  <span style={textNum}>{cartListItem.quantity}&nbsp;</span>
-                  <RemoveIcon style={icon} onClick={this.reduceCartItem(cartListItem.productData.id)}/>
-                  <span style={textNum}>{cartListItem.productData.salePrice.toFixed(2)}&nbsp;</span>
-                  <span
-                      style={textNum}>{roundPrice(cartListItem.quantity * cartListItem.productData.salePrice).toFixed(2)}&nbsp;</span>
-                  <DeleteForeverIcon style={icon} fontSize="large"
-                                     onClick={this.deleteCartItem(cartListItem.productData.id)}/>
-                </h2>
-            )
-          }
-          <h2>TOTAL: {total.toFixed(2)}</h2>
-          <h3>Inkl. moms: {moms.toFixed(2)}</h3>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Produkt namn</TableCell>
+                  <TableCell align="right">Antal</TableCell>
+                  <TableCell align="right">Pris</TableCell>
+                  <TableCell align="right">Summa</TableCell>
+                  <TableCell align="center">Ta bort</TableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {
+                  appStore.cartList.map((cli, i) =>
+                      <TableRow key={cli.productData.id}>
+                        <TableCell>{cli.productData.name}</TableCell>
+
+                        <TableCell align="right">
+                          <AddIcon style={icon} onClick={this.increaseCartItem(cli.productData.id)}/>
+                          {cli.quantity}
+                          <RemoveIcon style={icon} onClick={this.reduceCartItem(cli.productData.id)}/>
+                        </TableCell>
+
+                        <TableCell align="right">{cli.productData.salePrice} </TableCell>
+
+                        <TableCell align="right">
+                          {roundPrice(cli.quantity * cli.productData.salePrice).toFixed(2)}
+                        </TableCell>
+
+                        <TableCell align="center">
+                          <DeleteForeverIcon style={icon}
+                                             onClick={this.deleteCartItem(cli.productData.id)}/>
+                        </TableCell>
+                      </TableRow>
+                  )}
+
+                <TableRow>
+                  <TableCell rowSpan={3} />
+                  <TableCell colSpan={2}>Total</TableCell>
+                  <TableCell align='right'>{total.toFixed(2)}</TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell>Inkl. moms</TableCell>
+                  <TableCell align="right">{`25 %`}</TableCell>
+                  <TableCell align="right">{moms.toFixed(2)}</TableCell>
+                </TableRow>
+
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
     )
   }
 }
 
+
 const cart: CSSProperties = {
-  height: '10rem',
+  height: '40rem',
   backgroundColor: '#dddddd'
 }
 
