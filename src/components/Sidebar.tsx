@@ -20,7 +20,7 @@ export default class Sidebar extends Component<Props> {
     render () {
       return (
         <div style={sidebar}>
-          <h2>Categories</h2>
+          <h2>Kategori</h2>
           <ul style={categoryListCss}>
             {
               this.props.categoryList.map((category: CategoryData, i) =>
@@ -38,7 +38,7 @@ export default class Sidebar extends Component<Props> {
 }
 
 const sidebar: CSSProperties = {
-  fontSize: '1.2rem',
+  fontSize: '1.5rem',
   backgroundColor: '#d7e3ed',
   width: '350px',
   minWidth: '250px',

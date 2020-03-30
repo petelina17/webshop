@@ -60,8 +60,8 @@ export default class Content extends Component<Props> {
       return (
         <div style={content}>
           <div style={header}>
-            <div style={logo}>LOGO</div>
-            <div style={subtitle}>The best home essentials</div>
+            <div style={logo}>SommarButiken</div>
+            <div style={subtitle}>Trädgård & grill</div>
             <div>
               <input style={search} type="text" placeholder="Search"/>
             </div>

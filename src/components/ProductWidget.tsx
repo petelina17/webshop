@@ -3,6 +3,7 @@ import { Component, CSSProperties } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons'
 import {addProductData, appStore} from '../store'
+import {view} from 'react-easy-state'
 
 export interface ProductData {
     category: number
@@ -18,7 +19,7 @@ interface Props {
     productData: ProductData
 }
 
-export default class ProductWidget extends Component<Props> {
+class ProductWidget extends Component<Props> {
     onCartIconClick = () => {
       // this.props.onCartIconClick(this.props.productData)
       addProductData(this.props.productData)
@@ -98,3 +99,5 @@ const cart: CSSProperties = {
 const price: CSSProperties = {
   color: 'red'
 }
+
+export default view(ProductWidget)

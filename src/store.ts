@@ -6,12 +6,15 @@ import {ProductData} from './components/ProductWidget'
 interface StateStore {
     currentUser: string
     cartList: CartItem[]
-
+    snackbarOpen: boolean
+    snackbarText: string
 }
 
 const stateObject: StateStore = {
   currentUser: '',
-  cartList: []
+  cartList: [],
+  snackbarOpen: false,
+  snackbarText: ''
 
 }
 // React Easy State is a practical state management library with two functions and two accompanying rules.
@@ -26,9 +29,11 @@ export function addProductData(productData: ProductData) {
       quantity: 1
     }
     appStore.cartList.push(cartItem)
-    return
+  } else {
+    found.quantity += 1
   }
-  found.quantity += 1
+  appStore.snackbarText = 'Tillägd i kundvagn'
+  appStore.snackbarOpen = true
 }
 
 export function removeCartListItem(id: number) {

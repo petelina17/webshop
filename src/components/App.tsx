@@ -1,11 +1,25 @@
 import React from 'react'
 import Layout from './Layout'
 import Login from './Login'
+import {Snackbar} from '@material-ui/core'
+import Alert from './Alert'
+import {appStore} from '../store'
+import {view} from 'react-easy-state'
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
         <div>
+          <Snackbar open={appStore.snackbarOpen} autoHideDuration={6000}
+                    anchorOrigin={{horizontal: 'center', vertical: 'top'}} >
+            <Alert onClose={() => {
+              appStore.snackbarOpen = false
+            }}
+                   severity="success"
+            >
+              {appStore.snackbarText}
+            </Alert>
+          </Snackbar>
 
           <Layout/>
         </div>
@@ -34,4 +48,4 @@ export default class App extends React.Component {
 //   );
 // }
 
-// export default App;
+export default view(App);

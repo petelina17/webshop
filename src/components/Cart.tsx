@@ -6,6 +6,8 @@ import {view} from 'react-easy-state'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
+import Alert from './Alert'
+import {Snackbar} from '@material-ui/core'
 
 export interface CartItem {
   productData: ProductData
@@ -17,6 +19,10 @@ function roundPrice(price: number) {
 }
 
 class Cart extends Component {
+  state = {
+    snackbarOpen: false,
+    snackbarText: ''
+  }
 
   deleteCartItem = (id: number) => (event: MouseEvent) => {
     removeCartListItem(id)
@@ -40,17 +46,21 @@ class Cart extends Component {
 
     return (
         <div style={cart}>
-          <h1>My cart</h1>
+
+          <h1>Min kundvagn</h1>
+
           {
             appStore.cartList.map((cartListItem, i) =>
                 <h2 key={i}>
                   <span style={textName}>{cartListItem.productData.name}&nbsp;</span>
-                  <AddIcon style={icon} onClick={this.increaseCartItem(cartListItem.productData.id)} />
+                  <AddIcon style={icon} onClick={this.increaseCartItem(cartListItem.productData.id)}/>
                   <span style={textNum}>{cartListItem.quantity}&nbsp;</span>
-                  <RemoveIcon style={icon} onClick={this.reduceCartItem(cartListItem.productData.id)} />
+                  <RemoveIcon style={icon} onClick={this.reduceCartItem(cartListItem.productData.id)}/>
                   <span style={textNum}>{cartListItem.productData.salePrice.toFixed(2)}&nbsp;</span>
-                  <span style={textNum}>{roundPrice(cartListItem.quantity * cartListItem.productData.salePrice).toFixed(2)}&nbsp;</span>
-                  <DeleteForeverIcon style={icon} fontSize="large" onClick={this.deleteCartItem(cartListItem.productData.id)} />
+                  <span
+                      style={textNum}>{roundPrice(cartListItem.quantity * cartListItem.productData.salePrice).toFixed(2)}&nbsp;</span>
+                  <DeleteForeverIcon style={icon} fontSize="large"
+                                     onClick={this.deleteCartItem(cartListItem.productData.id)}/>
                 </h2>
             )
           }

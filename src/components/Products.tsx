@@ -67,8 +67,8 @@ export default class Products extends Component<Props> {
       let availableProducts = [<div style={banner}><h1>Sorry, no available products in this category</h1></div>]
 
       if (this.state.productList.length > 0) {
-        availableProducts = this.state.productList.map((product: ProductData, i) =>
-          <ProductWidget key={i} productData={product} />)
+        availableProducts = this.state.productList.map((product: ProductData) =>
+          <ProductWidget key={product.id} productData={product} />)
       }
 
       return (

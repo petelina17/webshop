@@ -5,7 +5,7 @@ export default class Footer extends Component {
   render () {
     return (
       <div style={footer}>
-        <h1>Thank you for visiting! Please come again!</h1>
+        <h1>Varor för dig som är sommarsugen!</h1>
       </div>
     )
   }
