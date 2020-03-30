@@ -36,8 +36,11 @@ export default class Layout extends Component <{}, State> {
 
                 <Cart />
 
-                <Button variant="contained" color="primary" size="large" onClick={() => {}}>
+                <Button variant="contained" color="secondary" size="large" onClick={() => {}}>
                   TILL KASSAN
+                </Button>
+                <Button variant="contained" color="default" size="large" onClick={() => { this.setState({hideCart: true}) }}>
+                  STÄNG
                 </Button>
               </div>
 
@@ -92,6 +95,6 @@ const cart: CSSProperties = {
   right: '3rem',
   backgroundColor: '#c0c0c0',
   borderRadius: '0.5em',
-  margin: '1rem'
-
+  margin: '1rem',
+  boxShadow: '5px 8px 8px 8px rgba(100, 100, 100, 0.15)'
 }
