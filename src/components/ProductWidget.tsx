@@ -70,6 +70,7 @@ const pic: CSSProperties = {
 }
 
 const details: CSSProperties = {
+  width: '100%',
   height: '100px',
   padding: '1rem 1rem',
   backgroundColor: '#f5f5f5',
