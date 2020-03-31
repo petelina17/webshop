@@ -1,40 +1,26 @@
-import React, { Component, CSSProperties } from 'react'
+import React, {Component, CSSProperties} from 'react'
 
-import { CategoryData } from './Categories'
+import {CategoryData} from './Categories'
+import {appStore} from '../store'
+import {Link} from 'react-router-dom'
 
-interface Props {
-    categoryList: Array<CategoryData>
-    categorySelected: (category: CategoryData) => void
-}
-
-export default class Sidebar extends Component<Props> {
-  constructor (props: Props) {
-    super(props)
-  }
-
-    onClick = (key: number) => {
-      const selected = this.props.categoryList[key]
-      this.props.categorySelected(selected)
-    }
-
-    render () {
-      return (
-        <div style={sidebar}>
-          <h2>Kategori</h2>
-          <ul style={categoryListCss}>
-            {
-              this.props.categoryList.map((category: CategoryData, i) =>
-              // onClick - has inlined function that knows local "i" (number of category object in list)
-                <li id={'category' + i} key={i} style={indCategoryListCss}
-                  onClick={ () => { this.onClick(i) } }>
-                  {category.name}
-                </li>
-              )
-            }
-          </ul>
-        </div>
-      )
-    }
+export default function Sidebar() {
+  return (
+      <div style={sidebar}>
+        <h2>Kategori</h2>
+        <ul style={categoryListCss}>
+          {
+            appStore.categoryList.map((category: CategoryData, i) =>
+                <Link key={i} style={{textDecoration: 'none', cursor: 'pointer'}} to={'/category/' + category.id.toString()}>
+                  <li id={'category' + i} key={i} style={indCategoryListCss}>
+                    {category.name}
+                  </li>
+                </Link>
+            )
+          }
+        </ul>
+      </div>
+  )
 }
 
 const sidebar: CSSProperties = {

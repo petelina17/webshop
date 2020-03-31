@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {Component, CSSProperties} from 'react'
 import CategoryWidget from './CategoryWidget'
-
-// import axios from 'axios'
+import {Link} from 'react-router-dom'
+import {appStore} from '../store'
 
 export interface CategoryData {
   name: string
@@ -12,40 +12,7 @@ export interface CategoryData {
 // colors from https://colorhunt.co/
 const widgetColors = ['#ffffc5', '#f0dd92', '#d6e4aa', '#83b582']
 
-// const apiKey = 'rVhwWD9xG3DBo1PXD3fWGeAO' // process.env.REACT_APP_BESTBUY_API_KEY
-// const categoriesApiUrl = 'https://api.bestbuy.com/v1/categories(id=abcat0100000)?format=json&&apiKey=' + apiKey
-
-interface Props {
-  categorySelected: (category: CategoryData) => void
-  onCategoriesLoaded: (list: Array<CategoryData>) => void
-}
-
-export default class Categories extends Component<Props> {
-  constructor(props: Props) {
-    super(props)
-
-    // To get data from BestBuy API axios needs function 'get'
-    // This function need only one param: URL link with API key (description in BestBuy docs: [BestBuy Open API](https://bestbuyapis.github.io/api-documentation/#overview)
-    // axios.get(categoriesApiUrl)
-    //   .then((response) => {
-    //     if (response != null && response.data != null) {
-    //       console.log('response.data:', response.data)
-    //       const listOfTVSubcategories: Array<CategoryData> = response.data.categories[0].subCategories
-    //       this.setState({ categoryList: listOfTVSubcategories })
-    //       this.props.onCategoriesLoaded(this.state.categoryList)
-    //     }
-    //   })
-  }
-
-  componentDidMount() {
-    const allCategories = require('../assets/product-data/categories.json')
-    this.setState({categoryList: allCategories})
-    this.props.onCategoriesLoaded(allCategories)
-  }
-
-  state = {
-    categoryList: Array<CategoryData>()
-  }
+export default class Categories extends Component {
 
   getColor = (i: number) => {
     // i in [0..N] ? => element from widgetColors [0..7]
@@ -59,9 +26,10 @@ export default class Categories extends Component<Props> {
         <div style={categories}>
           {
             // i - number of element in category list [0 .. N]
-            this.state.categoryList.map((category: CategoryData, i) =>
-                <CategoryWidget key={i} data={category} color={this.getColor(i)}
-                                onClick={this.props.categorySelected}/>
+            appStore.categoryList.map((category: CategoryData, i) =>
+                <Link style={{textDecoration: 'none'}} to={'/category/' + category.id.toString()} key={i}>
+                  <CategoryWidget key={i} data={category} color={this.getColor(i)} />
+                </Link>
             )
           }
         </div>

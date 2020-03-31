@@ -2,21 +2,24 @@ import React from 'react'
 import { store } from 'react-easy-state'
 import {CartItem} from './components/Cart'
 import {ProductData} from './components/ProductWidget'
+import {CategoryData} from './components/Categories'
 
 interface StateStore {
     currentUser: string
     cartList: CartItem[]
     snackbarOpen: boolean
     snackbarText: string
+    categoryList: Array<CategoryData>
 }
 
 const stateObject: StateStore = {
   currentUser: '',
   cartList: [],
   snackbarOpen: false,
-  snackbarText: ''
-
+  snackbarText: '',
+  categoryList: Array<CategoryData>()
 }
+
 // React Easy State is a practical state management library with two functions and two accompanying rules.
 // Always wrap your state store objects with store().
 export const appStore = store(stateObject)

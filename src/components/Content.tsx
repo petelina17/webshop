@@ -1,78 +1,46 @@
-import * as React from 'react'
-import { Component, CSSProperties } from 'react'
-import Categories, { CategoryData } from './Categories'
+import React, {lazy, CSSProperties} from 'react'
+import {Link, Route, Switch} from 'react-router-dom'
+import Categories from './Categories'
 import Sidebar from './Sidebar'
 import Products from './Products'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import { ProductData } from './ProductWidget'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons'
 import {Typography} from '@material-ui/core'
 
-interface Props {
+export default function Content() {
+  return (
+      <div style={content}>
+        <div style={header}>
+          <Typography variant="h2" style={logo}>SOMMAR BUTIQUE</Typography>
 
-}
-
-export default class Content extends Component<Props> {
-    // temporary solution
-    state = {
-      activePage: 1,
-      activeCategory: { name: '', id: 0 },
-      categoryListCopy: new Array<CategoryData>()
-    }
-
-    // temporary solution
-    switch = () => {
-      if (this.state.activePage === 1) {
-        this.setState({ activePage: 2 })
-        return
-      }
-      this.setState({ activePage: 1 })
-    }
-
-    onCategorySelected = (category: CategoryData) => {
-      this.setState({ activePage: 2 })
-      this.setState({ activeCategory: category })
-    }
-
-    onCategoriesLoaded = (list: Array<CategoryData>) => {
-      // array --> JSON text --> array (copy list)
-      this.setState({ categoryListCopy: JSON.parse(JSON.stringify(list)) })
-    }
-
-    render () {
-      // let selectedCategory = 'pcmcat158900050008'
-
-      let page = <Categories categorySelected={this.onCategorySelected}
-        onCategoriesLoaded={this.onCategoriesLoaded} />
-
-      if (this.state.activePage === 2) {
-        page = <>
-          <div style={btnBack} onClick={this.switch}>
-            <FontAwesomeIcon icon={faArrowCircleLeft} style={pic}/>
-            <a>Go back</a>
+          <div style={subtitle}>Trädgård & grill</div>
+          <div>
+            <input style={search} type="text" placeholder="Search"/>
           </div>
-          <div style={productsView}>
-            <Sidebar categoryList={this.state.categoryListCopy} categorySelected={this.onCategorySelected} />
-            <Products category={this.state.activeCategory} />
-          </div>
-        </>
-      }
-
-      return (
-        <div style={content}>
-          <div style={header}>
-            <Typography variant="h2" style={logo}>SOMMAR BUTIQUE</Typography>
-            <div style={subtitle}>Trädgård & grill</div>
-            <div>
-              <input style={search} type="text" placeholder="Search"/>
-            </div>
-          </div>
-          {page}
         </div>
-      )
-    }
 
-    id = 'meat'
+        <Switch>
+
+          <Route path="/category/:id">
+            <Link style={btnBack} to="/">
+              <FontAwesomeIcon icon={faArrowCircleLeft} style={pic}/>
+              <a>Gå hem</a>
+            </Link>
+            <div style={productsView}>
+              <Sidebar />
+              <Products />
+            </div>
+          </Route>
+
+          <Route path="/">
+            <Categories />
+          </Route>
+
+        </Switch>
+
+      </div>
+  )
+
 }
 
 const content: CSSProperties = {
@@ -121,7 +89,7 @@ const productsView: CSSProperties = {
 }
 
 const btnBack: CSSProperties = {
-  width: '6em',
+  //width: '16em',
   margin: 'auto',
   marginBottom: '1em',
   marginTop: '1em',
@@ -129,8 +97,8 @@ const btnBack: CSSProperties = {
   fontSize: '1.5rem',
   borderRadius: '1em',
   display: 'flex',
-  alignItems: 'center'
-
+  alignItems: 'center',
+  textDecoration: 'none'
 }
 
 const pic: CSSProperties = {

@@ -7,6 +7,13 @@ import {appStore} from '../store'
 import {view} from 'react-easy-state'
 
 class App extends React.Component {
+  constructor() {
+    super({});
+
+    const allCategories = require('../assets/product-data/categories.json')
+    appStore.categoryList = allCategories
+  }
+
   render() {
     return (
         <div>
@@ -31,26 +38,5 @@ class App extends React.Component {
     )
   }
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default view(App);

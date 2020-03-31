@@ -1,85 +1,30 @@
-import * as React from 'react'
-import { Component, CSSProperties } from 'react'
-import ProductWidget, { ProductData } from './ProductWidget'
-// import axios from 'axios'
-import { CategoryData } from './Categories'
+import React, {CSSProperties} from 'react'
+import {useParams} from 'react-router-dom'
+import ProductWidget, {ProductData} from './ProductWidget'
+import {appStore} from '../store'
 
-interface Props {
-    category: CategoryData
-}
+export default function Products() {
+  let {id} = useParams()
+  const categoryName = appStore.categoryList.find(categoryData => categoryData.id.toString() === id)
 
-interface State {
-    productList: Array<ProductData>
-    categoryId: number
-}
+  const allProducts = require('../assets/product-data/product-data.json')
+  const productList = allProducts.filter((p: ProductData) => p.category.toString() === id)
 
-export default class Products extends Component<Props> {
-  constructor (props: Props) {
-    super(props)
+  let availableProducts = [<div key={1} style={banner}><h1>Sorry, no available products in this category</h1></div>]
+
+  if (productList.length > 0) {
+    availableProducts = productList.map((product: ProductData) =>
+        <ProductWidget key={product.id} productData={product}/>)
   }
 
-    selectedId: number = 0
-
-    state: State = {
-      productList: [],
-      categoryId: 0
-    }
-
-    //
-    // *** REACT HOOKS ***
-    //
-    // hook call when props are changed
-    // https://www.pluralsight.com/guides/prop-changes-in-react-component
-    //
-    componentDidMount(): void {
-      this.loadProducts()
-    }
-
-  componentDidUpdate (prevProps: Props, prevState: State): void {
-      // compare category in props with local variable 'selectedId' and save if changed, and load procucts
-      if (this.selectedId !== this.props.category.id) {
-        this.selectedId = this.props.category.id
-        this.loadProducts()
-        console.log('loading products ...')
-      }
-    }
-
-    loadProducts = () => {
-      // const productsApiUrl = 'https://api.bestbuy.com/v1/products(categoryPath.id=' +
-      //       this.props.category.id + ')?format=json&show=sku,name,salePrice,image&sort=salePrice&apiKey='
-      //
-      // axios.get(productsApiUrl)
-      //   .then((response) => {
-      //     if (response != null && response.data != null) {
-      //       console.log('response.data:', response.data)
-      //       // const listOfTVSubcategories = response.data.categories[0].subCategories
-      //       // const names = listOfTVSubcategories.map((item: any) => item.name)
-      //       this.setState({ productList: response.data.products })
-      //     }
-      //   })
-
-      const allProducts = require('../assets/product-data/product-data.json')
-      this.setState({ productList: allProducts.filter((p: ProductData) => p.category === this.selectedId) })
-    }
-
-    render () {
-      // eslint-disable-next-line react/jsx-key
-      let availableProducts = [<div style={banner}><h1>Sorry, no available products in this category</h1></div>]
-
-      if (this.state.productList.length > 0) {
-        availableProducts = this.state.productList.map((product: ProductData) =>
-          <ProductWidget key={product.id} productData={product} />)
-      }
-
-      return (
-        <div style={productsView}>
-          <h1 style={title}>{this.props.category.name}</h1>
-          <div style={products}>
-            {availableProducts}
-          </div>
+  return (
+      <div style={productsView}>
+        <h1 style={title}>{categoryName?.name}</h1>
+        <div style={products}>
+          {availableProducts}
         </div>
-      )
-    }
+      </div>
+  )
 }
 
 const productsView: CSSProperties = {
