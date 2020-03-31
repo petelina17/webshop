@@ -10,8 +10,7 @@ export interface CategoryData {
 }
 
 // colors from https://colorhunt.co/
-const widgetColors = ['#918ba7', '#f18867', '#e85f99', '#50bda1', '#a8e6cf', '#dcedc1',
-  '#ffd3b6', '#ffaaa5']
+const widgetColors = ['#ffffc5', '#f0dd92', '#d6e4aa', '#83b582']
 
 // const apiKey = 'rVhwWD9xG3DBo1PXD3fWGeAO' // process.env.REACT_APP_BESTBUY_API_KEY
 // const categoriesApiUrl = 'https://api.bestbuy.com/v1/categories(id=abcat0100000)?format=json&&apiKey=' + apiKey

@@ -8,6 +8,7 @@ import {appStore} from '../store'
 import {view} from 'react-easy-state'
 import {getCookie} from 'tiny-cookie'
 import {Button} from '@material-ui/core'
+import Badge from '@material-ui/core/Badge'
 
 interface Props {
   handleCart: () => void
@@ -46,7 +47,9 @@ class Navbar extends Component <Props> {
         </div>
 
         <div style={cartIcon}>
-          <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()} />
+          <Badge color="secondary" badgeContent={appStore.cartList.length} showZero>
+            <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()} />
+          </Badge>
         </div>
 
         <Button variant="contained" color="secondary" size="medium">TILL KASSAN</Button>
