@@ -26,8 +26,6 @@ function roundPrice(price: number) {
 
 class Cart extends Component {
   state = {
-    snackbarOpen: false,
-    snackbarText: '',
     page: 0,
     rowsPerPage: 4,
   }

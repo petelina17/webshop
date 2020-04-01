@@ -7,7 +7,7 @@ import {ProductData} from './ProductWidget'
 import Cart from './Cart'
 import {view} from 'react-easy-state'
 import {Button, Typography} from '@material-ui/core'
-import {BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 export interface cartItem {
   id: string,
@@ -29,31 +29,37 @@ export default class Layout extends Component <{}, State> {
     return (
         <div style={layout}>
 
-          <Navbar handleCart={this.displayCart}/>
-
-          {this.state.hideCart ? null :
-              <div style={cart}>
-                <Typography variant="h4" component="h3">
-                  Kundvagn
-                </Typography>
-
-                <Cart/>
-
-                <Button variant="contained" color="secondary" size="large" onClick={() => {
-                }}>
-                  TILL KASSAN
-                </Button>
-                <Button variant="contained" color="default" size="large" onClick={() => {
-                  this.setState({hideCart: true})
-                }}>
-                  STÄNG
-                </Button>
-              </div>
-
-          }
-
           <Router>
+            <Navbar handleCart={this.displayCart}/>
+
+            {this.state.hideCart ? null :
+                <div style={cart}>
+                  <Typography variant="h4" component="h3">
+                    Kundvagn
+                  </Typography>
+
+                  <Cart/>
+
+                  <Route render={({history}) => (
+                      <Button variant="contained" color="secondary" size="large" onClick={() => {
+                        this.setState({hideCart: true})
+                        history.push('/checkout')
+
+                      }}>
+                        TILL KASSAN
+                      </Button>
+                  )}/>
+                  <Button variant="contained" color="default" size="large" onClick={() => {
+                    this.setState({hideCart: true})
+                  }}>
+                    STÄNG
+                  </Button>
+                </div>
+
+            }
+
             <Content/>
+
           </Router>
 
           <Footer/>
@@ -107,5 +113,6 @@ const cart: CSSProperties = {
   backgroundColor: '#e3e3e3',
   borderRadius: '0.5em',
   margin: '1rem',
-  boxShadow: '5px 8px 8px 8px rgba(100, 100, 100, 0.15)'
+  boxShadow: '5px 8px 8px 8px rgba(100, 100, 100, 0.15)',
+  zIndex: 100
 }

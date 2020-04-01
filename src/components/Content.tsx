@@ -8,6 +8,7 @@ import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons'
 import {Typography} from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import ProductDetail from './ProductDetail'
+import Checkout from './Checkout'
 
 function Content(props: any) {
   const handleBack = () => {
@@ -45,6 +46,14 @@ function Content(props: any) {
               <a>Gå tillbaka</a>
             </div>
             <ProductDetail/>
+          </Route>
+
+          <Route path="/checkout">
+            <div style={btnBack} onClick={handleBack}>
+              <FontAwesomeIcon icon={faArrowCircleLeft} style={pic}/>
+              <a>Gå tillbaka</a>
+            </div>
+            <Checkout />
           </Route>
 
           <Route path="/">

@@ -1,14 +1,15 @@
 import * as React from 'react'
-import { Component, CSSProperties } from 'react'
+import {Component, CSSProperties} from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import Login from './Login'
 import {appStore} from '../store'
 import {view} from 'react-easy-state'
 import {getCookie} from 'tiny-cookie'
 import {Button} from '@material-ui/core'
 import Badge from '@material-ui/core/Badge'
+import {Route} from 'react-router-dom'
 
 interface Props {
   handleCart: () => void
@@ -28,44 +29,53 @@ class Navbar extends Component <Props> {
   }
 
   openLogin = () => {
-    this.setState({ showLogin: true })
+    this.setState({showLogin: true})
   }
 
   closeLogin = () => {
-    this.setState({ showLogin: false })
+    this.setState({showLogin: false})
   }
 
   logout = () => {
     appStore.currentUser = ''
   }
 
-  render () {
+  render() {
     return (
-      <div style={navbar}>
-        <div style={welcome}>
-          {appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase() }
+        <div style={navbar}>
+          <div style={welcome}>
+            {appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase()}
+          </div>
+
+          <div style={cartIcon}>
+            <Badge color="secondary" badgeContent={appStore.cartList.length} showZero>
+              <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()}/>
+            </Badge>
+          </div>
+
+          <Route render={({history}) => (
+              <Button variant="contained" color="secondary" size="medium"
+                      onClick={() => {
+                        history.push('/checkout')
+                      }}
+              >
+                TILL KASSAN
+              </Button>
+          )}/>
+
+
+          {appStore.currentUser === '' ?
+              <div style={login} onClick={this.openLogin}>
+                LOGGA IN / SKAPA KONTO
+              </div>
+              :
+              <div style={login} onClick={this.logout}>
+                LOGGA UT
+              </div>
+          }
+
+          <Login open={this.state.showLogin} onClose={this.closeLogin}/>
         </div>
-
-        <div style={cartIcon}>
-          <Badge color="secondary" badgeContent={appStore.cartList.length} showZero>
-            <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()} />
-          </Badge>
-        </div>
-
-        <Button variant="contained" color="secondary" size="medium">TILL KASSAN</Button>
-
-        {appStore.currentUser === '' ?
-            <div style={login} onClick={this.openLogin}>
-              LOGGA IN / SKAPA KONTO
-            </div>
-            :
-            <div style={login} onClick={this.logout}>
-              LOGGA UT
-            </div>
-        }
-
-        <Login open={this.state.showLogin} onClose={this.closeLogin} />
-      </div>
     )
   }
 }
