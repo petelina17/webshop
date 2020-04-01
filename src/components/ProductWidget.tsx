@@ -1,40 +1,40 @@
 import * as React from 'react'
-import { Component, CSSProperties } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import {Component, CSSProperties} from 'react'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faHeart, faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import {addProductData, appStore} from '../store'
 import {view} from 'react-easy-state'
 
 export interface ProductData {
-    category: number
-    id: number
-    image: string
-    name: string
-    salePrice: number
-    description: string
-    measure: string
+  category: number
+  id: number
+  image: string
+  name: string
+  salePrice: number
+  description: string
+  measure: string
 }
 
 interface Props {
-    productData: ProductData
+  productData: ProductData
 }
 
 class ProductWidget extends Component<Props> {
-    onCartIconClick = () => {
-      // this.props.onCartIconClick(this.props.productData)
-      addProductData(this.props.productData)
-      // console.log(appStore.cartList)
+  onCartIconClick = () => {
+    // this.props.onCartIconClick(this.props.productData)
+    addProductData(this.props.productData)
+    // console.log(appStore.cartList)
+  }
+
+  render() {
+    // make product name no longer than N letters
+    const N = 45
+    let name = this.props.productData.name
+    if (name.length > N) {
+      name = name.substr(0, N) + '...'
     }
 
-    render () {
-      // make product name no longer than N letters
-      const N = 45
-      let name = this.props.productData.name
-      if (name.length > N) {
-        name = name.substr(0, N) + '...'
-      }
-
-      return (
+    return (
         <div style={widget}>
           <img style={pic} src={this.props.productData.image} alt={this.props.productData.name}/>
           <div style={details}>
@@ -46,8 +46,8 @@ class ProductWidget extends Component<Props> {
             </div>
           </div>
         </div>
-      )
-    }
+    )
+  }
 }
 
 const widget: CSSProperties = {
@@ -62,9 +62,7 @@ const widget: CSSProperties = {
 }
 
 const pic: CSSProperties = {
-  maxWidth: '220px',
-  maxHeight: '70%',
-  flexGrow: 1,
+  maxWidth: '100%',
   padding: '1rem 1rem',
   objectFit: 'contain'
 }

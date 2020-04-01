@@ -60,7 +60,10 @@ const search: CSSProperties = {
   fontSize: '1.5rem',
   borderRadius: '0.15em',
   border: '1px solid #cccccc',
-  padding: '0.2em 0.8em'
+  padding: '0.2em 0.8em',
+  maxWidth: '90%',
+  marginLeft: '1rem',
+  marginRight: '1rem',
 }
 
 // const categories: CSSProperties = {

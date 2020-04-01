@@ -46,6 +46,24 @@
   },
   {
     "category": 2296,
+    "id": "4000810105687",
+    "image": "/img/4000810105687.jpg",
+    "name": "Regulatorset SE 29mBar",
+    "salePrice": 199.90,
+    "description": "Godkänd och säker koppling med förmonterad slang och nippel. 30mbar för Sverige och Island.\nTill flaskor PC5/PC10/P6/P11.\n\nModellbeteckning: 1056G",
+    "measure": "st"
+  },
+  {
+    "category": 2296,
+    "id": "4000810155460",
+    "image": "/img/4000810155460.png",
+    "name": "Marinad- & såskanna Landmann",
+    "salePrice": 199.90,
+    "description": "Praktisk marinad-och såskanna tillverkad av rostfritt stål med en marinadborste av silikon. Med lock för att undvika att insekter och liknande kommer ner i såsen eller marinaden.",
+    "measure": "st"
+  },
+  {
+    "category": 2296,
     "id": "7310380472162",
     "image": "/img/7310380472162.jpg",
     "name": "Grillspett Bambu 100-p",
