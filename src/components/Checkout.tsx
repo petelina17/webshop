@@ -12,7 +12,7 @@ export default function Checkout() {
           KASSAN
         </Typography>
 
-        <Cart/>
+        <Cart pagination={false} />
 
 
         <Button variant="contained" color="secondary" size="large" onClick={onFinish}>

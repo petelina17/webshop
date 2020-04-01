@@ -38,7 +38,7 @@ export default class Layout extends Component <{}, State> {
                     Kundvagn
                   </Typography>
 
-                  <Cart/>
+                  <Cart pagination={true}/>
 
                   <Route render={({history}) => (
                       <Button variant="contained" color="secondary" size="large" onClick={() => {

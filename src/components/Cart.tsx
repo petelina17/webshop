@@ -15,6 +15,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {TablePagination} from '@material-ui/core'
 
+interface Props {
+  pagination: boolean
+}
+
 export interface CartItem {
   productData: ProductData
   quantity: number
@@ -24,7 +28,7 @@ function roundPrice(price: number) {
   return Math.floor(price * 100 + 0.5) / 100
 }
 
-class Cart extends Component {
+class Cart extends Component<Props> {
   state = {
     page: 0,
     rowsPerPage: 4,
@@ -50,6 +54,12 @@ class Cart extends Component {
     }
     const moms = roundPrice(total / 1.25 * 0.25)
 
+    let list = appStore.cartList
+    if (this.props.pagination) {
+      list = list.slice(this.state.page * this.state.rowsPerPage,
+          this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+    }
+
     return (
         <div style={cart}>
           <Paper>
@@ -68,10 +78,7 @@ class Cart extends Component {
 
                 <TableBody>
                   {
-                    appStore.cartList
-                        .slice(this.state.page * this.state.rowsPerPage,
-                            this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
-                        .map((cli, i) =>
+                    list.map((cli, i) =>
                         <TableRow key={cli.productData.id}>
                           <TableCell>{cli.productData.name}</TableCell>
 
@@ -109,18 +116,20 @@ class Cart extends Component {
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[4]}
-                component="div"
-                count={appStore.cartList.length}
-                rowsPerPage={this.state.rowsPerPage}
-                page={this.state.page}
-                onChangePage={(event: unknown, newPage: number) => {
-                  this.setState({page: newPage})
-                }}
-            />
-          </Paper>
-        </div>
+            {this.props.pagination ?
+                <TablePagination
+                    rowsPerPageOptions={[4]}
+                    component="div"
+                    count={appStore.cartList.length}
+                    rowsPerPage={this.state.rowsPerPage}
+                    page={this.state.page}
+                    onChangePage={(event: unknown, newPage: number) => {
+                      this.setState({page: newPage})
+                    }}
+                />
+                : ''}
+          </ Paper>
+        </ div>
     )
   }
 }
@@ -147,7 +156,7 @@ const icon: CSSProperties = {
 }
 
 const table: CSSProperties = {
-  maxHeight: '440px'
+  //maxHeight: '440px'
 }
 
 export default view(Cart)
