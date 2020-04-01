@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faHeart, faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import {addProductData, appStore} from '../store'
 import {view} from 'react-easy-state'
+import {Link} from 'react-router-dom'
 
 export interface ProductData {
   category: number
@@ -36,7 +37,11 @@ class ProductWidget extends Component<Props> {
 
     return (
         <div style={widget}>
-          <img style={pic} src={this.props.productData.image} alt={this.props.productData.name}/>
+
+          <Link style={picContainer} to={'/product/' + this.props.productData.id}>
+            <img style={pic} src={this.props.productData.image} alt={this.props.productData.name}/>
+          </Link>
+
           <div style={details}>
             <div style={description}>{name}</div>
             <div style={icons}>
@@ -59,6 +64,12 @@ const widget: CSSProperties = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center'
+}
+
+const picContainer: CSSProperties = {
+  maxWidth: '220px',
+  maxHeight: '70%',
+  flexGrow: 1,
 }
 
 const pic: CSSProperties = {

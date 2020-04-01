@@ -1,13 +1,19 @@
 import React, {lazy, CSSProperties} from 'react'
-import {Link, Route, Switch} from 'react-router-dom'
+import {Link, Route, Switch, withRouter} from 'react-router-dom'
 import Categories from './Categories'
 import Sidebar from './Sidebar'
 import Products from './Products'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons'
 import {Typography} from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/Search'
+import ProductDetail from './ProductDetail'
 
-export default function Content() {
+function Content(props: any) {
+  const handleBack = () => {
+    props.history.goBack()
+  }
+
   return (
       <div style={content}>
         <div style={header}>
@@ -15,7 +21,8 @@ export default function Content() {
 
           <div style={subtitle}>Trädgård & grill</div>
           <div>
-            <input style={search} type="text" placeholder="Search"/>
+
+            <input style={search} type="text" placeholder= "Sök"/>
           </div>
         </div>
 
@@ -30,6 +37,14 @@ export default function Content() {
               <Sidebar />
               <Products />
             </div>
+          </Route>
+
+          <Route path="/product/:id">
+            <div style={btnBack} onClick={handleBack}>
+              <FontAwesomeIcon icon={faArrowCircleLeft} style={pic}/>
+              <a>Gå tillbaka</a>
+            </div>
+            <ProductDetail/>
           </Route>
 
           <Route path="/">
@@ -101,10 +116,13 @@ const btnBack: CSSProperties = {
   borderRadius: '1em',
   display: 'flex',
   alignItems: 'center',
-  textDecoration: 'none'
+  textDecoration: 'none',
+  cursor: 'pointer'
 }
 
 const pic: CSSProperties = {
   marginRight: '0.3em',
   marginLeft: '0.08em'
 }
+
+export default withRouter(Content)
