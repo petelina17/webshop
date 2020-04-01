@@ -104,8 +104,8 @@ export default function Login(props: Props) {
 
         // save username to global store
         appStore.currentUser = state.username
+        appStore.userData = found
 
-        // save all user data to local store
         if (state.checked) {
           const now = new Date;
           now.setMonth(now.getMonth() + 1);

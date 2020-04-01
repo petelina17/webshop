@@ -2,6 +2,8 @@ import React from 'react'
 import {Button, Card, CardContent, Container, createStyles, Theme, Typography} from '@material-ui/core'
 import Cart from './Cart'
 import {makeStyles} from '@material-ui/core/styles'
+import {appStore} from '../store'
+import {view} from 'react-easy-state'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -13,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export default function Checkout() {
+function Checkout() {
   const classes = useStyles();
 
   const onFinish = () => {}
@@ -32,7 +34,7 @@ export default function Checkout() {
               {'Dina uppgifter'.toUpperCase()}
             </Typography>
 
-            <p>123</p>
+            <p>Namn: {appStore.userData?.firstname}</p>
             <p>123</p>
             <p>123</p>
 
@@ -75,3 +77,5 @@ export default function Checkout() {
       </Container>
   )
 }
+
+export default view(Checkout)

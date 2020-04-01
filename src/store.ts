@@ -3,6 +3,7 @@ import { store } from 'react-easy-state'
 import {CartItem} from './components/Cart'
 import {ProductData} from './components/ProductWidget'
 import {CategoryData} from './components/Categories'
+import {UserData} from './components/userData'
 
 interface StateStore {
     currentUser: string
@@ -10,6 +11,7 @@ interface StateStore {
     snackbarOpen: boolean
     snackbarText: string
     categoryList: Array<CategoryData>
+    userData: UserData | null
 }
 
 const stateObject: StateStore = {
@@ -17,7 +19,8 @@ const stateObject: StateStore = {
   cartList: [],
   snackbarOpen: false,
   snackbarText: '',
-  categoryList: Array<CategoryData>()
+  categoryList: Array<CategoryData>(),
+  userData: null
 }
 
 // React Easy State is a practical state management library with two functions and two accompanying rules.

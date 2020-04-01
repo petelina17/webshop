@@ -10,6 +10,7 @@ import {getCookie} from 'tiny-cookie'
 import {Button} from '@material-ui/core'
 import Badge from '@material-ui/core/Badge'
 import {Route} from 'react-router-dom'
+import {UserData} from './userData'
 
 interface Props {
   handleCart: () => void
@@ -25,6 +26,14 @@ class Navbar extends Component <Props> {
     const cookies = getCookie('currentUser')
     if (cookies != null) {
       appStore.currentUser = cookies
+
+      const foundJSON = localStorage.getItem('userdata_' + cookies)
+      if (foundJSON != null) {
+        const found: UserData = JSON.parse(foundJSON)
+        console.log(found)
+        appStore.userData = found
+      }
+
     }
   }
 
