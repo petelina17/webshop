@@ -37,10 +37,12 @@ export function addProductData(productData: ProductData) {
   }
   appStore.snackbarText = 'Tillägd i kundvagn'
   appStore.snackbarOpen = true
+  saveToLocalStorage()
 }
 
 export function removeCartListItem(id: number) {
   appStore.cartList = appStore.cartList.filter(cartListItem => cartListItem.productData.id !== id)
+  saveToLocalStorage()
 }
 
 export function increaseCartListItem (id: number) {
@@ -48,6 +50,7 @@ export function increaseCartListItem (id: number) {
   if (found) {
     found.quantity += 1
   }
+  saveToLocalStorage()
 }
 
 export function reduceCartListItem (id: number) {
@@ -58,5 +61,17 @@ export function reduceCartListItem (id: number) {
       removeCartListItem(id)
     }
   }
+  saveToLocalStorage()
+}
 
+function saveToLocalStorage() {
+  const cartListJson = JSON.stringify(stateObject.cartList)
+  localStorage.setItem('sommarButiqueCartList', cartListJson)
+}
+
+export function loadFromLocalStorage() {
+  const cartListJson = localStorage.getItem('sommarButiqueCartList')
+  if (cartListJson != null) {
+    stateObject.cartList = JSON.parse(cartListJson)
+  }
 }

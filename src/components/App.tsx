@@ -3,12 +3,13 @@ import Layout from './Layout'
 import Login from './Login'
 import {Snackbar} from '@material-ui/core'
 import Alert from './Alert'
-import {appStore} from '../store'
+import {appStore, loadFromLocalStorage} from '../store'
 import {view} from 'react-easy-state'
 
 class App extends React.Component {
   constructor() {
     super({});
+    loadFromLocalStorage()
 
     const allCategories = require('../assets/product-data/categories.json')
     appStore.categoryList = allCategories
