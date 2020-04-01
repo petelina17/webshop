@@ -83,9 +83,9 @@ class Cart extends Component<Props> {
                           <TableCell>{cli.productData.name}</TableCell>
 
                           <TableCell align="right">
-                            <AddIcon style={icon} onClick={this.increaseCartItem(cli.productData.id)}/>
-                            {cli.quantity}
                             <RemoveIcon style={icon} onClick={this.reduceCartItem(cli.productData.id)}/>
+                            <span style={{}}>{cli.quantity}</span>
+                            <AddIcon style={icon} onClick={this.increaseCartItem(cli.productData.id)}/>
                           </TableCell>
 
                           <TableCell align="right">{cli.productData.salePrice} </TableCell>
@@ -101,21 +101,26 @@ class Cart extends Component<Props> {
                         </TableRow>
                     )}
 
-                  <TableRow>
-                    <TableCell rowSpan={3}/>
-                    <TableCell colSpan={2}>Total</TableCell>
-                    <TableCell align='right'>{total.toFixed(2)}</TableCell>
-                  </TableRow>
+                  {!this.props.pagination ?
+                      <>
+                        <TableRow>
+                          <TableCell rowSpan={3}/>
+                          <TableCell colSpan={2} style={{fontWeight: 'bold'}}>Att betala:</TableCell>
+                          <TableCell align='right' style={{fontWeight: 'bold'}}>{total.toFixed(2) + ' kr'}</TableCell>
+                        </TableRow>
 
-                  <TableRow>
-                    <TableCell>Inkl. moms</TableCell>
-                    <TableCell align="right">{`25 %`}</TableCell>
-                    <TableCell align="right">{moms.toFixed(2)}</TableCell>
-                  </TableRow>
+                        <TableRow>
+                          <TableCell>Inkl. moms</TableCell>
+                          <TableCell align="right">{`25 %`}</TableCell>
+                          <TableCell align="right">{moms.toFixed(2)}</TableCell>
+                        </TableRow>
+                      </>
+                      : ''}
 
                 </TableBody>
               </Table>
             </TableContainer>
+
             {this.props.pagination ?
                 <TablePagination
                     rowsPerPageOptions={[4]}
@@ -157,6 +162,7 @@ const icon: CSSProperties = {
 
 const table: CSSProperties = {
   //maxHeight: '440px'
+  fontSize: '3rem'
 }
 
 export default view(Cart)
