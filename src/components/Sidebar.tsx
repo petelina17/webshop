@@ -4,14 +4,24 @@ import {CategoryData} from './Categories'
 import {appStore} from '../store'
 import {Link} from 'react-router-dom'
 
-export default function Sidebar() {
+interface Props {
+
+}
+
+export default function Sidebar(props: Props) {
+  const handleClose = () => {
+    appStore.sidebarDrawer = false
+  }
+
   return (
-      <div style={sidebar}>
+      <div style={sidebar} onClick={handleClose}>
         <h2>Kategori</h2>
         <ul style={categoryListCss}>
           {
             appStore.categoryList.map((category: CategoryData, i) =>
-                <Link key={i} style={{textDecoration: 'none', cursor: 'pointer'}} to={'/category/' + category.id.toString()}>
+                <Link key={i} style={{textDecoration: 'none', cursor: 'pointer'}}
+                      to={'/category/' + category.id.toString()}
+                >
                   <li id={'category' + i} key={i} style={indCategoryListCss}>
                     {category.name}
                   </li>

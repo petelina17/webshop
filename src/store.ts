@@ -1,17 +1,18 @@
 import React from 'react'
-import { store } from 'react-easy-state'
+import {store} from 'react-easy-state'
 import {CartItem} from './components/Cart'
 import {ProductData} from './components/ProductWidget'
 import {CategoryData} from './components/Categories'
 import {UserData} from './components/userData'
 
 interface StateStore {
-    currentUser: string
-    cartList: CartItem[]
-    snackbarOpen: boolean
-    snackbarText: string
-    categoryList: Array<CategoryData>
-    userData: UserData | null
+  currentUser: string
+  cartList: CartItem[]
+  snackbarOpen: boolean
+  snackbarText: string
+  categoryList: Array<CategoryData>
+  userData: UserData | null
+  sidebarDrawer: boolean
 }
 
 const stateObject: StateStore = {
@@ -20,7 +21,8 @@ const stateObject: StateStore = {
   snackbarOpen: false,
   snackbarText: '',
   categoryList: Array<CategoryData>(),
-  userData: null
+  userData: null,
+  sidebarDrawer: false
 }
 
 // React Easy State is a practical state management library with two functions and two accompanying rules.
@@ -48,7 +50,7 @@ export function removeCartListItem(id: number) {
   saveToLocalStorage()
 }
 
-export function increaseCartListItem (id: number) {
+export function increaseCartListItem(id: number) {
   const found = appStore.cartList.find(cartListItem => cartListItem.productData.id === id)
   if (found) {
     found.quantity += 1
@@ -56,7 +58,7 @@ export function increaseCartListItem (id: number) {
   saveToLocalStorage()
 }
 
-export function reduceCartListItem (id: number) {
+export function reduceCartListItem(id: number) {
   const found = appStore.cartList.find(cartListItem => cartListItem.productData.id === id)
   if (found) {
     found.quantity -= 1

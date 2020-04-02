@@ -45,7 +45,7 @@ class ProductWidget extends Component<Props> {
           <div style={details}>
             <div style={description}>{name}</div>
             <div style={icons}>
-              <FontAwesomeIcon icon={faHeart}/>
+              {/*<FontAwesomeIcon icon={faHeart}/>*/}
               <FontAwesomeIcon style={cart} icon={faCartPlus} onClick={this.onCartIconClick}/>
               <div style={price}>{this.props.productData.salePrice.toFixed(2)}</div>
             </div>
@@ -94,7 +94,7 @@ const icons: CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-end',
-  fontSize: '1.5rem'
+  fontSize: '2rem'
 
 }
 
@@ -103,7 +103,8 @@ const description: CSSProperties = {
 }
 
 const cart: CSSProperties = {
-  color: '#444444'
+  color: '#444444',
+  cursor: 'pointer'
 }
 
 const price: CSSProperties = {

@@ -3,11 +3,12 @@ import {Component, CSSProperties} from 'react'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
+import MenuIcon from '@material-ui/icons/Menu';
 import Login from './Login'
 import {appStore} from '../store'
 import {view} from 'react-easy-state'
 import {getCookie} from 'tiny-cookie'
-import {Button} from '@material-ui/core'
+import {Button, Hidden, IconButton} from '@material-ui/core'
 import Badge from '@material-ui/core/Badge'
 import {Route} from 'react-router-dom'
 import {UserData} from './userData'
@@ -52,6 +53,17 @@ class Navbar extends Component <Props> {
   render() {
     return (
         <div style={navbar}>
+          <Hidden mdUp>
+          <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => { appStore.sidebarDrawer = true }}
+              edge="start"
+          >
+            <MenuIcon />
+          </IconButton>
+          </Hidden>
+
           <div style={welcome}>
             {appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase()}
           </div>

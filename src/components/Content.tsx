@@ -5,10 +5,12 @@ import Sidebar from './Sidebar'
 import Products from './Products'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons'
-import {Typography} from '@material-ui/core'
+import {Drawer, Hidden, Typography} from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import ProductDetail from './ProductDetail'
 import Checkout from './Checkout'
+import {appStore} from '../store'
+import {view} from 'react-easy-state'
 
 function Content(props: any) {
   const handleBack = () => {
@@ -35,7 +37,9 @@ function Content(props: any) {
               <a>Gå hem</a>
             </Link>
             <div style={productsView}>
+              <Hidden smDown>
               <Sidebar />
+              </Hidden>
               <Products />
             </div>
           </Route>

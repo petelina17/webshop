@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
         maxWidth: '600px',
         margin: 'auto',
         backgroundColor: '#fefefe',
-        padding: '2em',
+        paddingBottom: '1em',
         paddingTop: '1em'
       },
       root: {

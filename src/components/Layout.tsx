@@ -29,7 +29,7 @@ export default class Layout extends Component <{}, State> {
     return (
         <div style={layout}>
 
-          <Router>
+
             <Navbar handleCart={this.displayCart}/>
 
             {this.state.hideCart ? null :
@@ -59,8 +59,6 @@ export default class Layout extends Component <{}, State> {
             }
 
             <Content/>
-
-          </Router>
 
           <Footer/>
 
