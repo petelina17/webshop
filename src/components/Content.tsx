@@ -17,6 +17,10 @@ function Content(props: any) {
     props.history.goBack()
   }
 
+  const loadCheckout = () => {
+    return(<Checkout />)
+  }
+
   return (
       <div style={content}>
         <div style={header}>
@@ -57,7 +61,8 @@ function Content(props: any) {
               <FontAwesomeIcon icon={faArrowCircleLeft} style={pic}/>
               <a>Gå tillbaka</a>
             </div>
-            <Checkout />
+            {/*<Checkout />*/}
+            {loadCheckout()}
           </Route>
 
           <Route path="/">

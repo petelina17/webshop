@@ -31,6 +31,7 @@ class Navbar extends Component <Props> {
       appStore.currentUser = cookies
 
       const foundJSON = localStorage.getItem('userdata_' + cookies)
+      console.log('foundJSON', foundJSON)
       if (foundJSON != null) {
         const found: UserData = JSON.parse(foundJSON)
         console.log(found)

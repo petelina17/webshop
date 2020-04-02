@@ -81,8 +81,6 @@ export default function Login(props: Props) {
   };
 
   const handleClose = (event: object, reason: string) => {
-    // TODO: ...
-    console.log('login closed ...')
   }
 
   const checkLogin = () => {

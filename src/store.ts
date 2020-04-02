@@ -79,4 +79,6 @@ export function loadFromLocalStorage() {
   if (cartListJson != null) {
     stateObject.cartList = JSON.parse(cartListJson)
   }
+
+
 }
