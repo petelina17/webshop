@@ -5,6 +5,7 @@ import {faHeart, faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import {addProductData, appStore} from '../store'
 import {view} from 'react-easy-state'
 import {Link} from 'react-router-dom'
+import {IconButton} from '@material-ui/core'
 
 export interface ProductData {
   category: number
@@ -46,7 +47,9 @@ class ProductWidget extends Component<Props> {
             <div style={description}>{name}</div>
             <div style={icons}>
               {/*<FontAwesomeIcon icon={faHeart}/>*/}
-              <FontAwesomeIcon style={cart} icon={faCartPlus} onClick={this.onCartIconClick}/>
+              <IconButton style={cart} onClick={this.onCartIconClick}>
+                 <FontAwesomeIcon icon={faCartPlus} />
+              </IconButton>
               <div style={price}>{this.props.productData.salePrice.toFixed(2)}</div>
             </div>
           </div>
@@ -57,7 +60,7 @@ class ProductWidget extends Component<Props> {
 
 const widget: CSSProperties = {
   width: '220px',
-  height: '320px',
+  height: '340px',
   backgroundColor: 'white',
   margin: '1rem 0.5rem',
   display: 'flex',
@@ -80,7 +83,7 @@ const pic: CSSProperties = {
 
 const details: CSSProperties = {
   width: '100%',
-  height: '100px',
+  height: '120px',
   padding: '1rem 1rem',
   backgroundColor: '#f5f5f5',
   display: 'flex',
@@ -93,9 +96,9 @@ const icons: CSSProperties = {
   color: '#a0a0a0',
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'flex-end',
-  fontSize: '2rem'
-
+  alignItems: 'center',
+  fontSize: '2rem',
+  marginBottom: '0.17em'
 }
 
 const description: CSSProperties = {
@@ -103,8 +106,10 @@ const description: CSSProperties = {
 }
 
 const cart: CSSProperties = {
-  color: '#444444',
-  cursor: 'pointer'
+  color: '#444',
+  cursor: 'pointer',
+  fontSize: '1em',
+  marginLeft: '-0.45em'
 }
 
 const price: CSSProperties = {

@@ -12,6 +12,8 @@ import {Button, Hidden, IconButton} from '@material-ui/core'
 import Badge from '@material-ui/core/Badge'
 import {Route} from 'react-router-dom'
 import {UserData} from './userData'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 interface Props {
   handleCart: () => void
@@ -54,19 +56,23 @@ class Navbar extends Component <Props> {
     return (
         <div style={navbar}>
           <Hidden mdUp>
-          <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={() => { appStore.sidebarDrawer = true }}
-              edge="start"
-          >
-            <MenuIcon />
-          </IconButton>
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={() => {
+                  appStore.sidebarDrawer = true
+                }}
+                edge="start"
+            >
+              <MenuIcon/>
+            </IconButton>
           </Hidden>
 
+          <Hidden smDown>
           <div style={welcome}>
             {appStore.currentUser === '' ? '' : ('Välkommen ' + appStore.currentUser).toUpperCase()}
           </div>
+          </Hidden>
 
           <div style={cartIcon}>
             <Badge color="secondary" badgeContent={appStore.cartList.length} showZero>
@@ -87,11 +93,21 @@ class Navbar extends Component <Props> {
 
           {appStore.currentUser === '' ?
               <div style={login} onClick={this.openLogin}>
-                LOGGA IN / SKAPA KONTO
+                <Hidden xsDown>
+                  LOGGA IN / SKAPA KONTO
+                </Hidden>
+                <Hidden smUp>
+                  <PermIdentityIcon />
+                </Hidden>
               </div>
               :
               <div style={login} onClick={this.logout}>
-                LOGGA UT
+                <Hidden xsDown>
+                  LOGGA UT
+                </Hidden>
+                <Hidden smUp>
+                  <ExitToAppIcon />
+                </Hidden>
               </div>
           }
 
@@ -107,6 +123,8 @@ const navbar: CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  paddingLeft: '1rem',
+  paddingRight: '1rem'
   // border: '4px solid white',
   // borderRadius: '12px'
 }
@@ -126,7 +144,6 @@ const cartIcon: CSSProperties = {
 }
 
 const login: CSSProperties = {
-  paddingRight: '3em',
   cursor: 'pointer',
   marginLeft: '2rem'
 }
