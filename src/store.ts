@@ -9,6 +9,7 @@ import {clearScreenDown} from 'readline'
 interface StateStore {
   currentUser: string
   cartList: CartItem[]
+  //cartCount: number
   snackbarOpen: boolean
   snackbarText: string
   categoryList: Array<CategoryData>
@@ -19,6 +20,7 @@ interface StateStore {
 const stateObject: StateStore = {
   currentUser: '',
   cartList: [],
+  //cartCount: 0,
   snackbarOpen: false,
   snackbarText: '',
   categoryList: Array<CategoryData>(),
