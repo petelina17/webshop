@@ -4,10 +4,12 @@ import {CartItem} from './components/Cart'
 import {ProductData} from './components/ProductWidget'
 import {CategoryData} from './components/Categories'
 import {UserData} from './components/userData'
+import {clearScreenDown} from 'readline'
 
 interface StateStore {
   currentUser: string
   cartList: CartItem[]
+  //cartCount: number
   snackbarOpen: boolean
   snackbarText: string
   categoryList: Array<CategoryData>
@@ -18,6 +20,7 @@ interface StateStore {
 const stateObject: StateStore = {
   currentUser: '',
   cartList: [],
+  //cartCount: 0,
   snackbarOpen: false,
   snackbarText: '',
   categoryList: Array<CategoryData>(),
@@ -29,16 +32,18 @@ const stateObject: StateStore = {
 // Always wrap your state store objects with store().
 export const appStore = store(stateObject)
 
+loadFromLocalStorage()
+
 export function addProductData(productData: ProductData) {
-  const found = appStore.cartList.find(cartListItem => cartListItem.productData.id === productData.id)
-  if (found == null) {
+  const foundIndex = appStore.cartList.findIndex(cartListItem => cartListItem.productData.id === productData.id)
+  if (foundIndex < 0) {
     const cartItem: CartItem = {
       productData: productData,
       quantity: 1
     }
     appStore.cartList.push(cartItem)
   } else {
-    found.quantity += 1
+    appStore.cartList[foundIndex].quantity += 1
   }
   appStore.snackbarText = 'Tillägd i kundvagn'
   appStore.snackbarOpen = true
@@ -70,15 +75,18 @@ export function reduceCartListItem(id: number) {
 }
 
 function saveToLocalStorage() {
-  const cartListJson = JSON.stringify(stateObject.cartList)
-  localStorage.setItem('sommarButiqueCartList', cartListJson)
+    const cartListJson = JSON.stringify(stateObject.cartList)
+    const key = appStore.currentUser
+    localStorage.setItem('sommarButiqueCartList_' + (key ? key : ''), cartListJson)
 }
 
 export function loadFromLocalStorage() {
-  const cartListJson = localStorage.getItem('sommarButiqueCartList')
+  console.log('load from local storage')
+  const key = appStore.currentUser
+  const cartListJson = localStorage.getItem('sommarButiqueCartList_' + (key ? key : ''))
   if (cartListJson != null) {
-    stateObject.cartList = JSON.parse(cartListJson)
+    appStore.cartList = JSON.parse(cartListJson)
+  } else {
+    appStore.cartList = []
   }
-
-
 }

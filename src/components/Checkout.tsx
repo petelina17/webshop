@@ -337,7 +337,7 @@ function Checkout() {
           Inkl. moms och frakt
         </Typography>
 
-        <Button style={{marginTop: '1rem'}} variant="contained" color="secondary" size="large" onClick={onFinish}>
+        <Button style={{marginTop: '1rem', marginBottom: '2rem'}} variant="contained" color="secondary" size="large" onClick={onFinish}>
           <Typography variant="h5">
             Slutför köp
           </Typography>

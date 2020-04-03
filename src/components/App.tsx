@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function App()  {
-    loadFromLocalStorage()
-
     const allCategories = require('../assets/product-data/categories.json')
     appStore.categoryList = allCategories
 

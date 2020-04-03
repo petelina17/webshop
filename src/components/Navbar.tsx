@@ -5,9 +5,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import MenuIcon from '@material-ui/icons/Menu';
 import Login from './Login'
-import {appStore} from '../store'
+import {appStore, loadFromLocalStorage} from '../store'
 import {view} from 'react-easy-state'
-import {getCookie} from 'tiny-cookie'
+import {getCookie, remove} from 'tiny-cookie'
 import {Button, Hidden, IconButton} from '@material-ui/core'
 import Badge from '@material-ui/core/Badge'
 import {Route} from 'react-router-dom'
@@ -47,10 +47,13 @@ class Navbar extends Component <Props> {
 
   closeLogin = () => {
     this.setState({showLogin: false})
+    loadFromLocalStorage()
   }
 
   logout = () => {
     appStore.currentUser = ''
+    remove('currentUser')
+    loadFromLocalStorage()
   }
 
   render() {
@@ -76,7 +79,9 @@ class Navbar extends Component <Props> {
           </Hidden>
 
           <div style={cartIcon}>
-            <Badge color="secondary" badgeContent={appStore.cartList.length} showZero>
+            <Badge color="secondary" badgeContent={appStore.cartList.length > 0 ? appStore.cartList.map(x => x.quantity).reduce((accumulator, currentValue) => {
+              return accumulator + currentValue
+            }) : 0} showZero>
               <FontAwesomeIcon icon={faShoppingCart} onClick={() => this.props.handleCart()}/>
             </Badge>
           </div>
