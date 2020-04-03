@@ -2,7 +2,6 @@
   "name": "webshop",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://petelina17.github.io/webshop",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
@@ -33,9 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:ts": "eslint --ext=jsx,ts,tsx src",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "lint:ts": "eslint --ext=jsx,ts,tsx src"
   },
   "eslintConfig": {
     "extends": "react-app"

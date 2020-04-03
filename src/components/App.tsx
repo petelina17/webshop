@@ -39,7 +39,8 @@ function App()  {
 
     return (
         <div>
-          <Router basename="/webshop">
+          <Router>
+            {/*<Router basename="/webshop">*/}
           <Drawer anchor="left" open={appStore.sidebarDrawer}>
             <div className={classes.drawerHeader}>
               <IconButton onClick={handleClose}>
