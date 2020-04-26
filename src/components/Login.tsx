@@ -65,6 +65,7 @@ export default function Login(props: Props) {
     firstname: '',
     secondname: '',
     address: '',
+    mobile: '',
     loginError: false,
     registrationMode: false,
     snackbarOpen: false,
@@ -136,7 +137,8 @@ export default function Login(props: Props) {
       secondname: state.secondname,
       username: state.username,
       address: state.address,
-      password: state.password
+      password: state.password,
+      mobile: state.mobile
     }
     localStorage.setItem('userdata_' + state.username, JSON.stringify(userData))
 

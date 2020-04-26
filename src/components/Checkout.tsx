@@ -44,8 +44,6 @@ function Checkout() {
     personnummer: ''
   });
 
-  let name = appStore.userData?.firstname
-
   const onFinish = () => {
   }
 
@@ -66,6 +64,11 @@ function Checkout() {
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({...state, [event.target.name]: event.target.value});
   };
+
+  const userDataHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    (appStore.userData as UserData)[event.target.name] = event.target.value
+  };
+
 
   // this function calls method reportValidity from current form (embedded)
   const validate = (event: any) => {
@@ -102,29 +105,32 @@ function Checkout() {
                        label="NAMN"
                        type="text"
                        name="firstname"
-                       value={state.firstname}
-                       onChange={handleTextChange}
+                       value={appStore.userData.firstname}
+                       onChange={userDataHandler}
             />
             <TextField required
                        variant="outlined"
                        label="EFTERNAMN"
                        type="text"
                        name="secondname"
-                       onChange={handleTextChange}
+                       value={appStore.userData.secondname}
+                       onChange={userDataHandler}
             />
             <TextField required
                        variant="outlined"
                        label="MOBILNUMMER"
                        type="text"
-                       name="mobilnummer"
-                       onChange={handleTextChange}
+                       name="mobile"
+                       value={appStore.userData.mobile}
+                       onChange={userDataHandler}
             />
             <TextField required
                        variant="outlined"
                        label="ADRESS"
                        type="text"
                        name="address"
-                       onChange={handleTextChange}
+                       value={appStore.userData.address}
+                       onChange={userDataHandler}
             />
             <TextField required
                        variant="outlined"
@@ -132,7 +138,8 @@ function Checkout() {
                        type="email"
                        name="username"
                        onBlur={validate}
-                       onChange={handleTextChange}
+                       value={appStore.userData.username}
+                       onChange={userDataHandler}
                        error={state.loginError}
                        helperText={state.loginError ? 'Okänd användaren eller lösenord' : ''}
             />

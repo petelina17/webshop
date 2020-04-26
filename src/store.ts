@@ -13,7 +13,7 @@ interface StateStore {
   snackbarOpen: boolean
   snackbarText: string
   categoryList: Array<CategoryData>
-  userData: UserData | null
+  userData: UserData
   sidebarDrawer: boolean
 }
 
@@ -24,7 +24,14 @@ const stateObject: StateStore = {
   snackbarOpen: false,
   snackbarText: '',
   categoryList: Array<CategoryData>(),
-  userData: null,
+  userData: {
+    firstname: '',
+    secondname: '',
+    address: '',
+    username: '',
+    mobile: '',
+    password: ''
+  } as UserData,
   sidebarDrawer: false
 }
 
@@ -75,9 +82,9 @@ export function reduceCartListItem(id: number) {
 }
 
 function saveToLocalStorage() {
-    const cartListJson = JSON.stringify(stateObject.cartList)
-    const key = appStore.currentUser
-    localStorage.setItem('sommarButiqueCartList_' + (key ? key : ''), cartListJson)
+  const cartListJson = JSON.stringify(stateObject.cartList)
+  const key = appStore.currentUser
+  localStorage.setItem('sommarButiqueCartList_' + (key ? key : ''), cartListJson)
 }
 
 export function loadFromLocalStorage() {
