@@ -105,6 +105,8 @@ function Checkout() {
                        label="NAMN"
                        type="text"
                        name="firstname"
+                       error={!!appStore.userData.firstname.match(/^$|[^\[A-Za-z- ]+/g)}
+                       helperText={!!appStore.userData.firstname.match(/^$|[^\[A-Za-z- ]+/g) ? 'only letters': ''}
                        value={appStore.userData.firstname}
                        onChange={userDataHandler}
             />
@@ -113,6 +115,8 @@ function Checkout() {
                        label="EFTERNAMN"
                        type="text"
                        name="secondname"
+                       error={!!appStore.userData.secondname.match(/^$|[^\[A-Za-z- ]+/g)}
+                       helperText={!!appStore.userData.secondname.match(/^$|[^\[A-Za-z- ]+/g) ? 'only letters': ''}
                        value={appStore.userData.secondname}
                        onChange={userDataHandler}
             />
@@ -121,6 +125,8 @@ function Checkout() {
                        label="MOBILNUMMER"
                        type="text"
                        name="mobile"
+                       error={!appStore.userData.mobile.match(/^\d{10}$/g)}
+                       helperText={!appStore.userData.mobile.match(/^\d{10}$/g) ? 'incorrect input, must be 10 digits': ''}
                        value={appStore.userData.mobile}
                        onChange={userDataHandler}
             />
@@ -129,6 +135,8 @@ function Checkout() {
                        label="ADRESS"
                        type="text"
                        name="address"
+                       error={!!appStore.userData.address.match(/^$|[^\w ]+/g)}
+                       helperText={!!appStore.userData.address.match(/^$|[^\w ]+/g) ? 'only digits and letters': ''}
                        value={appStore.userData.address}
                        onChange={userDataHandler}
             />
@@ -137,11 +145,13 @@ function Checkout() {
                        label="E-POSTADRESS"
                        type="email"
                        name="username"
+                       error={!appStore.userData.username.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g)}
+                       helperText={!appStore.userData.username.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g) ? 'incorrect e-mail': ''}
                        onBlur={validate}
                        value={appStore.userData.username}
                        onChange={userDataHandler}
-                       error={state.loginError}
-                       helperText={state.loginError ? 'Okänd användaren eller lösenord' : ''}
+                       // error={state.loginError}
+                       // helperText={state.loginError ? 'Okänd användaren eller lösenord' : ''}
             />
 
           </CardContent>
