@@ -300,8 +300,11 @@ function Checkout() {
                                variant="outlined"
                                label="Mobilnummer"
                                type="text"
-                               name="mobilnummer"
-                               onChange={handleTextChange}
+                               name="mobile"
+                               error={!appStore.userData.mobile.match(/^\d{10}$/g)}
+                               helperText={!appStore.userData.mobile.match(/^\d{10}$/g) ? 'incorrect input, must be 10 digits': ''}
+                               value={appStore.userData.mobile}
+                               onChange={userDataHandler}
                     />
                   </Box>
                   : ''
@@ -330,10 +333,13 @@ function Checkout() {
               {state.checkedB.includes('3') ?
                   <Box style={payDetail}>
                     <TextField required
+                               fullWidth
                                variant="outlined"
-                               label="Personnummer"
+                               label="Personnummer ÅÅMMDDXXXX"
                                type="text"
                                name="personnummer"
+                               error={!state.personnummer.match(/^\d{10}$/g)}
+                               helperText={!state.personnummer.match(/^\d{10}$/g) ? 'incorrect input': ''}
                                onChange={handleTextChange}
                     />
                   </Box>
@@ -365,6 +371,7 @@ function Checkout() {
 }
 
 const payDetail: CSSProperties = {
+  width: '25em',
   padding: '1rem 1rem',
   marginBottom: '1rem'
 }
