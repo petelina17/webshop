@@ -41,11 +41,14 @@ function Checkout() {
     address: '',
     loginError: false,
     deliveryType: '',
-    personnummer: ''
+    personnummer: '',
+    cardNumber: '',
+    cardHolder: ''
   });
 
   const onFinish = () => {
   }
+
 
   let total = 0
   appStore.cartList.forEach(x => {
@@ -81,10 +84,48 @@ function Checkout() {
   };
 
   const handleToggleB = (value: string) => () => {
-    const newChecked = [''];
-    newChecked.push(value);
+    const newChecked = [value];
     setState({...state, checkedB: newChecked});
   };
+
+  const isCreditCardValid = () => {
+    return state.cardNumber.match(/^\d{16}$/g) || state.checkedB[0] !== '1'
+  }
+
+  const isCreditCardHolderValid = () => {
+    return !state.cardHolder.match(/^$|[^\[A-Za-z- ]+/g) || state.checkedB[0] !== '1'
+  }
+
+  const isPersonnummerValid = () => {
+    return state.personnummer.match(/^\d{10}$/g) || state.checkedB[0] !== '3'
+  }
+
+  const isMobileValid = () => {
+    return appStore.userData.mobile.match(/^\d{10}$/g) // || state.checkedB[0] !== '2'
+  }
+
+  const  isNameValid = (name: string) => {
+    return !name.match(/^$|[^\[A-Za-z- ]+/g)
+  }
+
+  const isAddressValid = () => {
+    return !appStore.userData.address.match(/^$|[^\w ]+/g)
+  }
+
+  const isEmailValid = () => {
+    return appStore.userData.username.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g)
+  }
+
+  const readyForCheckOut = () => {
+    return state.checked[0] !== '0' && state.checkedB[0] !== ''
+        && isCreditCardValid() && isCreditCardHolderValid()
+        && isPersonnummerValid()
+        && isMobileValid()
+        && isNameValid(appStore.userData.firstname)
+        && isNameValid(appStore.userData.secondname)
+        && isAddressValid()
+        && isEmailValid()
+  }
 
   return (
       <Container maxWidth="lg">
@@ -105,8 +146,8 @@ function Checkout() {
                        label="NAMN"
                        type="text"
                        name="firstname"
-                       error={!!appStore.userData.firstname.match(/^$|[^\[A-Za-z- ]+/g)}
-                       helperText={!!appStore.userData.firstname.match(/^$|[^\[A-Za-z- ]+/g) ? 'only letters': ''}
+                       error={!isNameValid(appStore.userData.firstname)}
+                       helperText={!isNameValid(appStore.userData.firstname) ? 'endast bokstäver' : ''}
                        value={appStore.userData.firstname}
                        onChange={userDataHandler}
             />
@@ -115,8 +156,8 @@ function Checkout() {
                        label="EFTERNAMN"
                        type="text"
                        name="secondname"
-                       error={!!appStore.userData.secondname.match(/^$|[^\[A-Za-z- ]+/g)}
-                       helperText={!!appStore.userData.secondname.match(/^$|[^\[A-Za-z- ]+/g) ? 'only letters': ''}
+                       error={!isNameValid(appStore.userData.secondname)}
+                       helperText={!isNameValid(appStore.userData.secondname) ? 'endast bokstäver' : ''}
                        value={appStore.userData.secondname}
                        onChange={userDataHandler}
             />
@@ -125,8 +166,8 @@ function Checkout() {
                        label="MOBILNUMMER"
                        type="text"
                        name="mobile"
-                       error={!appStore.userData.mobile.match(/^\d{10}$/g)}
-                       helperText={!appStore.userData.mobile.match(/^\d{10}$/g) ? 'incorrect input, must be 10 digits': ''}
+                       error={!isMobileValid()}
+                       helperText={!isMobileValid() ? 'ogiltig inmatning, ange 10 siffror' : ''}
                        value={appStore.userData.mobile}
                        onChange={userDataHandler}
             />
@@ -135,8 +176,8 @@ function Checkout() {
                        label="ADRESS"
                        type="text"
                        name="address"
-                       error={!!appStore.userData.address.match(/^$|[^\w ]+/g)}
-                       helperText={!!appStore.userData.address.match(/^$|[^\w ]+/g) ? 'only digits and letters': ''}
+                       error={!isAddressValid()}
+                       helperText={!isAddressValid() ? 'endast siffror och bokstäver' : ''}
                        value={appStore.userData.address}
                        onChange={userDataHandler}
             />
@@ -145,13 +186,13 @@ function Checkout() {
                        label="E-POSTADRESS"
                        type="email"
                        name="username"
-                       error={!appStore.userData.username.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g)}
-                       helperText={!appStore.userData.username.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g) ? 'incorrect e-mail': ''}
+                       error={!isEmailValid()}
+                       helperText={!isEmailValid() ? 'ogiltig e-mail' : ''}
                        onBlur={validate}
                        value={appStore.userData.username}
                        onChange={userDataHandler}
-                       // error={state.loginError}
-                       // helperText={state.loginError ? 'Okänd användaren eller lösenord' : ''}
+                // error={state.loginError}
+                // helperText={state.loginError ? 'Okänd användaren eller lösenord' : ''}
             />
 
           </CardContent>
@@ -171,7 +212,7 @@ function Checkout() {
 
                 <Grid container>
                   <ListItemText id={'11'} primary={`FedEx`}/>
-                  <ListItemText id={'12'} primary={`Leveranstid 2-3 dagar`}/>
+                  <ListItemText id={'12'} primary={`Leveranstid 72 timmar`}/>
                   <ListItemText id={'13'} primary={`59 kr`}/>
                 </Grid>
                 <ListItemSecondaryAction>
@@ -262,6 +303,8 @@ function Checkout() {
                                label="Kortnummer"
                                type="text"
                                name="cardNumber"
+                               error={!isCreditCardValid()}
+                               helperText={!isCreditCardValid() ? 'ogiltig inmatning, ange 16 siffror' : ''}
                                onChange={handleTextChange}
                     />
                     <TextField required
@@ -269,6 +312,8 @@ function Checkout() {
                                label="Kortinnehavare"
                                type="text"
                                name="cardHolder"
+                               error={!isCreditCardHolderValid()}
+                               helperText={!isCreditCardHolderValid() ? 'namn och efternamn, endast bokstäver' : ''}
                                onChange={handleTextChange}
                     />
                   </Box>
@@ -301,8 +346,8 @@ function Checkout() {
                                label="Mobilnummer"
                                type="text"
                                name="mobile"
-                               error={!appStore.userData.mobile.match(/^\d{10}$/g)}
-                               helperText={!appStore.userData.mobile.match(/^\d{10}$/g) ? 'incorrect input, must be 10 digits': ''}
+                               error={!isMobileValid()}
+                               helperText={!isMobileValid() ? 'ogiltig inmatning, ange 10 siffror' : ''}
                                value={appStore.userData.mobile}
                                onChange={userDataHandler}
                     />
@@ -338,8 +383,8 @@ function Checkout() {
                                label="Personnummer ÅÅMMDDXXXX"
                                type="text"
                                name="personnummer"
-                               error={!state.personnummer.match(/^\d{10}$/g)}
-                               helperText={!state.personnummer.match(/^\d{10}$/g) ? 'incorrect input': ''}
+                               error={!isPersonnummerValid()}
+                               helperText={!isPersonnummerValid() ? 'ogiltig inmatning, ange 10 siffror' : ''}
                                onChange={handleTextChange}
                     />
                   </Box>
@@ -352,19 +397,21 @@ function Checkout() {
         </Card>
 
         <Box style={finish}>
-        <Typography variant="h4">
-          Att betala: {total.toFixed(2)} kr
-        </Typography>
-
-        <Typography variant="h6">
-          Inkl. moms och frakt
-        </Typography>
-
-        <Button style={{marginTop: '1rem', marginBottom: '2rem'}} variant="contained" color="secondary" size="large" onClick={onFinish}>
-          <Typography variant="h5">
-            Slutför köp
+          <Typography variant="h4">
+            Att betala: {total.toFixed(2)} kr
           </Typography>
-        </Button>
+
+          <Typography variant="h6">
+            Inkl. moms och frakt
+          </Typography>
+
+          <Button style={{marginTop: '1rem', marginBottom: '2rem'}}
+                  variant="contained" color="secondary" size="large"
+                  disabled={!readyForCheckOut()} onClick={onFinish}>
+            <Typography variant="h5">
+              Slutför köp
+            </Typography>
+          </Button>
         </Box>
       </Container>
   )
@@ -373,7 +420,7 @@ function Checkout() {
 const payDetail: CSSProperties = {
   width: '25em',
   padding: '1rem 1rem',
-  marginBottom: '1rem'
+  marginBottom: '1.5rem'
 }
 const finish: CSSProperties = {
   display: 'flex',
