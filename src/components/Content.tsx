@@ -11,6 +11,7 @@ import ProductDetail from './ProductDetail'
 import Checkout from './Checkout'
 import {appStore} from '../store'
 import {view} from 'react-easy-state'
+import Confirmation from './Confirmation'
 
 function Content(props: any) {
   const handleBack = () => {
@@ -63,6 +64,10 @@ function Content(props: any) {
             </div>
             {/*<Checkout />*/}
             {loadCheckout()}
+          </Route>
+
+          <Route path="/confirmation">
+            <Confirmation/>
           </Route>
 
           <Route path="/">

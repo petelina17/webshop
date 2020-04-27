@@ -3,7 +3,7 @@ import {
   Avatar, Box,
   Button,
   Card,
-  CardContent, Checkbox,
+  CardContent, Checkbox, CircularProgress,
   Container,
   createStyles,
   List,
@@ -13,11 +13,12 @@ import {
 } from '@material-ui/core'
 import Cart from './Cart'
 import {makeStyles} from '@material-ui/core/styles'
-import {appStore} from '../store'
+import {appStore, removeAllFromCart} from '../store'
 import {view} from 'react-easy-state'
 import TextField from '@material-ui/core/TextField'
 import {UserData} from './userData'
 import Grid from '@material-ui/core/Grid'
+import {Route} from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,12 +44,9 @@ function Checkout() {
     deliveryType: '',
     personnummer: '',
     cardNumber: '',
-    cardHolder: ''
+    cardHolder: '',
+    inProcess: false
   });
-
-  const onFinish = () => {
-  }
-
 
   let total = 0
   appStore.cartList.forEach(x => {
@@ -104,7 +102,7 @@ function Checkout() {
     return appStore.userData.mobile.match(/^\d{10}$/g) // || state.checkedB[0] !== '2'
   }
 
-  const  isNameValid = (name: string) => {
+  const isNameValid = (name: string) => {
     return !name.match(/^$|[^\[A-Za-z- ]+/g)
   }
 
@@ -125,6 +123,53 @@ function Checkout() {
         && isNameValid(appStore.userData.secondname)
         && isAddressValid()
         && isEmailValid()
+  }
+
+  const getDeliveryDate = () => {
+    const delivery = new Date()
+    switch (state.checked[0]) {
+      case '3':
+        delivery.setDate(delivery.getDate() + 1)
+        break
+      case '2':
+        delivery.setDate(delivery.getDate() + 2)
+        break
+      default:
+        delivery.setDate(delivery.getDate() + 3)
+        break
+    }
+    return delivery
+  }
+
+
+  const mockAPI = () => {
+    return new Promise((resolve, reject) => {
+      const success = Math.random() > 0.5
+      if (success) {
+        setTimeout(resolve, 2000)
+      } else {
+        setTimeout(reject, 4000)
+      }
+    })
+  }
+
+  const process = (history: any) => {
+    setState({...state, inProcess: true})
+    mockAPI()
+        .then(() => {
+          appStore.deliveryDate = getDeliveryDate().toDateString()
+          appStore.total = total
+          appStore.cartListShadow = [...appStore.cartList]
+          removeAllFromCart()
+          history.push('/confirmation')
+        })
+        .catch(() => {
+          appStore.snackbarText = 'betalning misslyckades, försok igen'
+          appStore.snackbarOpen = true
+        })
+        .finally(() => {
+          setState({...state, inProcess: false})
+        })
   }
 
   return (
@@ -404,14 +449,20 @@ function Checkout() {
           <Typography variant="h6">
             Inkl. moms och frakt
           </Typography>
+          <Route render={({history}) => (
+              <Button style={{marginTop: '1rem', marginBottom: '2rem'}}
+                      variant="contained" color="secondary" size="large"
+                      disabled={!readyForCheckOut() || state.inProcess}
+                      onClick={() => {
+                        process(history)
+                      }}>
+                <Typography variant="h5">
+                  Slutför köp
+                </Typography>
+              </Button>
 
-          <Button style={{marginTop: '1rem', marginBottom: '2rem'}}
-                  variant="contained" color="secondary" size="large"
-                  disabled={!readyForCheckOut()} onClick={onFinish}>
-            <Typography variant="h5">
-              Slutför köp
-            </Typography>
-          </Button>
+          )}/>
+          { state.inProcess ? <CircularProgress/> : '' }
         </Box>
       </Container>
   )

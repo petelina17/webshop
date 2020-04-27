@@ -9,17 +9,21 @@ import {clearScreenDown} from 'readline'
 interface StateStore {
   currentUser: string
   cartList: CartItem[]
+  cartListShadow: CartItem[]
   //cartCount: number
   snackbarOpen: boolean
   snackbarText: string
   categoryList: Array<CategoryData>
   userData: UserData
   sidebarDrawer: boolean
+  total: number
+  deliveryDate: string
 }
 
 const stateObject: StateStore = {
   currentUser: '',
   cartList: [],
+  cartListShadow: [],
   //cartCount: 0,
   snackbarOpen: false,
   snackbarText: '',
@@ -32,7 +36,9 @@ const stateObject: StateStore = {
     mobile: '',
     password: ''
   } as UserData,
-  sidebarDrawer: false
+  sidebarDrawer: false,
+  total: 0,
+  deliveryDate: ''
 }
 
 // React Easy State is a practical state management library with two functions and two accompanying rules.
@@ -54,6 +60,11 @@ export function addProductData(productData: ProductData) {
   }
   appStore.snackbarText = 'Tillägd i kundvagn'
   appStore.snackbarOpen = true
+  saveToLocalStorage()
+}
+
+export function removeAllFromCart() {
+  appStore.cartList = []
   saveToLocalStorage()
 }
 
